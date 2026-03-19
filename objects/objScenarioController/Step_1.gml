@@ -1,0 +1,1 @@
+global.can_use_passive = false;

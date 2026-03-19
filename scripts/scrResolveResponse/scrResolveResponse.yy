@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrResolveResponse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrResolveResponse",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

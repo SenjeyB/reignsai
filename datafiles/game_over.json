@@ -1,0 +1,23 @@
+{
+    "data": {
+        "cards": [
+            {
+                "phrase": "Game Over: Your kingdom has fallen",
+                "option_1": {
+                    "description": "TILTUI BRATUHA",
+                    "science": 0,
+                    "army": 0,
+                    "support": 0,
+                    "resources": 0
+                },
+                "option_2": {
+                    "description": "IGRAI ZANOGO",
+                    "science": 0,
+                    "army": 0,
+                    "support": 0,
+                    "resources": 0
+                }
+            }
+        ]
+    }
+}

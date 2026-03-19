@@ -1,0 +1,27 @@
+{
+    "success": true,
+    "data": {
+        "cards": [
+            {
+                "situation": "A neighboring kingdom offers an alliance",
+                "option_1": {
+                    "description": "Accept the alliance",
+                    "science": 13,
+                    "army": 10,
+                    "support": 17,
+                    "resources": -15
+                },
+                "option_2": {
+                    "description": "Decline politely",
+                    "science": 0,
+                    "army": -18,
+                    "support": -14,
+                    "resources": 12
+                }
+            }
+        ]
+    }
+}
+
+
+
