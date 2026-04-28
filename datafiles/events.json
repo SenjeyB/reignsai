@@ -4,6 +4,7 @@
         "cards": [
             {
                 "situation": "A neighboring kingdom offers an alliance",
+                "phrase": "Your Majesty, we come bearing an offer of friendship!",
                 "option_1": {
                     "description": "Accept the alliance",
                     "science": 13,

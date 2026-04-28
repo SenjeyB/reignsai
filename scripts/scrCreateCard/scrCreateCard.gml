@@ -2,13 +2,8 @@ function scrCreateCard(_card_base) {
 	global.can_use_passive = true;
 	
 	sprBaseRect = sprCardBase;
-	
-	char_list = [
-	    sprCharBase1,
-	    sprCharBase2
-	];
 
-	var final_sprite = scrCreateComposedSprite(sprBaseRect, char_list, _card_base.situation, "PressStart2P.ttf");
+	var final_sprite = scrCreateComposedSprite(sprBaseRect, _card_base.situation, "PressStart2P.ttf");
 	with instance_create_layer(display_get_width()/2, display_get_height()/2, "Instances", objBaseCard) {
 	    sprite_index = final_sprite;
 		stat = [];
@@ -23,5 +18,9 @@ function scrCreateCard(_card_base) {
 		desc_opt1 = _card_base.desc_opt1;
 		desc_opt2 = _card_base.desc_opt2;
 		global.current_card_id = id;
+	}
+
+	if (!global.game_over) {
+		scrAudioPlayManChance();
 	}
 }

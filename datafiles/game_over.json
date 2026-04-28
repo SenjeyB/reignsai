@@ -2,6 +2,7 @@
     "data": {
         "cards": [
             {
+                "situation": "Your reign has come to an end. The kingdom remembers your rule.",
                 "phrase": "Game Over: Your kingdom has fallen",
                 "option_1": {
                     "description": "TILTUI BRATUHA",

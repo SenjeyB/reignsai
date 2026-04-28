@@ -13,6 +13,7 @@ function scrScenarioInit(_multipliers){
 	];
 	
 	global.game_over = false;
+	global.game_over_ambient_played = false;
 	
 	global.choices_done = [0, 0, 0, 0]; 
 	

@@ -1,4 +1,6 @@
 function scrMacroInit() {
+	randomize();
+
 	global.stat_name = [];
 	
 	#macro RESOURCES 0
@@ -13,7 +15,7 @@ function scrMacroInit() {
 	#macro SCIENCE 3
 	global.stat_name[SCIENCE] = "Science";
 	
-	global.start_room = rmMenu;
+	global.start_room = rmMainMenu;
 	global.current_abilities = [-1, -1, -1, -1];
 	global.ability_mode = [];
 	global.ability_name = [];

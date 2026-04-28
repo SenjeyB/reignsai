@@ -1,3 +1,5 @@
+scrInitApiSession();
+
 menu_x = 50;
 menu_y = 50;
 menu_width = 300;

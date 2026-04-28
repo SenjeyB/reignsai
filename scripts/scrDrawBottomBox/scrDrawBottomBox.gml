@@ -1,31 +1,38 @@
 function scrDrawBottomBox(_text, _font)
 {
-	var box_w_pct = 0.86;
-	var box_h_pct = 0.18;
-
 	var sw = display_get_gui_width();
 	var sh = display_get_gui_height();
+	var text_value = is_string(_text) ? _text : string(_text);
+	if (text_value == "") text_value = " ";
+	var old_font = draw_get_font();
+	var old_color = draw_get_color();
+	var old_halign = draw_get_halign();
+	var old_valign = draw_get_valign();
 
-	var box_w = sw * clamp(box_w_pct, 0.05, 1);
-	var box_h = sh * clamp(box_h_pct, 0.03, 0.6);
+	var splash_w = max(1, sprite_get_width(sprSplash));
+	var splash_h = max(1, sprite_get_height(sprSplash));
+	var splash_scale = 1.2;
+	var box_w = min(sw * 0.98, sw * 0.86 * splash_scale);
+	var box_h = clamp(box_w * (splash_h / splash_w), sh * 0.14, sh * 0.28);
 	var box_x = (sw - box_w) * 0.5;
-	var box_y = sh - box_h - (sh * 0.03);
+	var box_y = sh - box_h;
 
-	var pad_x = box_w * 0.08;
-	var pad_y = box_h * 0.10;
+	var pad_x = box_w * 0.16;
+	var pad_top = box_h * 0.34;
+	var pad_bottom = box_h * 0.26;
 	var inner_w = box_w - pad_x * 2;
-	var inner_h = box_h - pad_y * 2;
+	var inner_h = box_h - pad_top - pad_bottom;
 
 	var words = ds_list_create();
 	var pos = 1;
-	var len = string_length(_text);
+	var len = string_length(text_value);
 	while (pos <= len)
 	{
-	    while (pos <= len && string_char_at(_text, pos) == " ") pos++;
+	    while (pos <= len && string_char_at(text_value, pos) == " ") pos++;
 	    if (pos > len) break;
 	    var s = pos;
-	    while (pos <= len && string_char_at(_text, pos) != " ") pos++;
-	    ds_list_add(words, string_copy(_text, s, pos - s));
+	    while (pos <= len && string_char_at(text_value, pos) != " ") pos++;
+	    ds_list_add(words, string_copy(text_value, s, pos - s));
 	}
 	if (ds_list_size(words) == 0) ds_list_add(words, " ");
 
@@ -35,7 +42,7 @@ function scrDrawBottomBox(_text, _font)
 
 	if (use_dynamic)
 	{
-	    var max_test_size = min(32, floor(inner_h));
+	    var max_test_size = min(24, floor(inner_h));
 	    var min_test_size = 6;
 	    var low = min_test_size;
 	    var high = max_test_size;
@@ -76,12 +83,14 @@ function scrDrawBottomBox(_text, _font)
 	    }
 
 	    used_font = best_font;
-	    draw_set_font(used_font);
+	    if (used_font == -1) used_font = old_font;
+	    if (used_font != -1) draw_set_font(used_font);
 	    line_h = string_height("Ay"); if (line_h <= 0) line_h = 16;
 	}
 	else
 	{
 	    used_font = _font;
+	    if (used_font == -1) used_font = old_font;
 	    if (used_font != -1) draw_set_font(used_font);
 	    line_h = string_height("Ay"); if (line_h <= 0) line_h = 16;
 	}
@@ -107,35 +116,23 @@ function scrDrawBottomBox(_text, _font)
 	if (ds_list_size(final_lines) == 0) ds_list_add(final_lines, " ");
 
 	var n_lines = ds_list_size(final_lines);
-	var max_line_width = 0;
-	for (var j = 0; j < n_lines; j++)
-	{
-	    var lw = string_width(final_lines[| j]);
-	    if (lw > max_line_width) max_line_width = lw;
-	}
 	var total_h = n_lines * line_h;
-	var start_x = box_x + (box_w - max_line_width) * 0.5;
-	var start_y = box_y + pad_y + (inner_h - total_h) * 0.5;
+	var center_x = box_x + box_w * 0.5;
+	var start_y = box_y + pad_top + (inner_h - total_h) * 0.5;
+	start_y = clamp(start_y, box_y + pad_top, box_y + box_h - pad_bottom - total_h);
 
-	var old_font = draw_get_font();
-	var old_color = draw_get_color();
-	var old_halign = draw_get_halign();
-	var old_valign = draw_get_valign();
-
-	var border = 4;
-	draw_set_color(c_black);
-	draw_rectangle(box_x, box_y, box_x + box_w, box_y + box_h, false);
-	draw_rectangle(box_x + border, box_y + border, box_x + box_w - border, box_y + box_h - border, false);
-	draw_set_color(c_white);
-	draw_rectangle(box_x + 1, box_y + 1, box_x + box_w - 1, box_y + box_h - 1, true);
+	draw_sprite_stretched(sprSplash, 0, box_x, box_y, box_w, box_h);
 
 	draw_set_color(c_white);
-	draw_set_halign(fa_left);
+	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);
 	var yy = start_y;
 	for (var k = 0; k < n_lines; k++)
 	{
-	    draw_text(start_x, yy, final_lines[| k]);
+	    draw_set_color(c_black);
+	    draw_text(center_x + 2, yy + 2, final_lines[| k]);
+	    draw_set_color(c_white);
+	    draw_text(center_x, yy, final_lines[| k]);
 	    yy += line_h;
 	}
 

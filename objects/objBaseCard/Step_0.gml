@@ -76,6 +76,7 @@ if (mouse_check_button_released(mb_left)) {
     grab_angle_y_t = 0;
 	
 	if (opt != noone && global.game_over) {
+		scrAudioPlayButton();
 		room_goto(global.start_room);
 		return;
 	}

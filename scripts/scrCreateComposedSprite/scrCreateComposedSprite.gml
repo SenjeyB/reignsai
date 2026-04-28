@@ -23,19 +23,22 @@ function __get_cached_font(_file, _size)
 
 
 
-function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
+function scrCreateComposedSprite(_base, _text_list, _font)
 {
     var w = sprite_get_width(_base);
     var h = sprite_get_height(_base);
 
-    var sprChar = _char_list[ irandom(array_length(_char_list)-1) ];
+    var sprChar = sprCharBase;
+    var _char_frames = sprite_get_number(sprChar);
+    if (_char_frames <= 0) _char_frames = 1;
+    var sprCharIndex = irandom(_char_frames - 1);
     var t_full  = _text_list;
     if (t_full == "") t_full = " ";
 
     var box_w = w * 0.86;
-    var box_h = h * 0.36;
+    var box_h = h * 0.34;
     var box_x = (w - box_w) / 2;
-    var box_y = h * 0.56;
+    var box_y = h * 0.54;
 
     var pad_x = box_w * 0.08;
     var pad_y = box_h * 0.10;
@@ -46,14 +49,7 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
     surface_set_target(surf);
     draw_clear_alpha(c_black, 0);
     draw_sprite(_base, 0, w/2, h/2);
-    draw_sprite(sprChar, 0, w/2, h/4);
-
-    var border = 4;
-    draw_set_color(c_black);
-    draw_rectangle(box_x, box_y, box_x + box_w, box_y + box_h, false);
-    draw_rectangle(box_x + border, box_y + border, box_x + box_w - border, box_y + box_h - border, false);
-    draw_set_color(c_white);
-    draw_rectangle(box_x + 1, box_y + 1, box_x + box_w - 1, box_y + box_h - 1, true);
+    draw_sprite(sprChar, sprCharIndex, w/2, h/3 + 30);
 
     var words = ds_list_create();
     var pos = 1, len = string_length(t_full);
@@ -75,10 +71,11 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
     var final_lines = ds_list_create();
     var used_font = -1;
     var line_h = 16;
+    var line_gap = 2;
 
     if (use_dynamic)
     {
-        var max_test_size = min(floor(inner_h), 256);
+        var max_test_size = min(floor(inner_h * 0.72), 96);
         var min_test_size = 6;
         if (max_test_size < min_test_size) max_test_size = min_test_size;
 
@@ -104,6 +101,7 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
 
             var lh = string_height("Ay");
             if (lh <= 0) lh = 1;
+            var lg = max(1, round(lh * 0.25));
 
             var too_large = false;
             var lines_needed = 0;
@@ -139,7 +137,8 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
                 if (cur != "") lines_needed++;
             }
 
-            var fits = (!too_large) && (lines_needed * lh <= inner_h);
+            var required_h = lines_needed * lh + max(0, lines_needed - 1) * lg;
+            var fits = (!too_large) && (required_h <= inner_h);
 
             if (fits)
             {
@@ -164,6 +163,7 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
 
         line_h = string_height("Ay");
         if (line_h <= 0) line_h = 16;
+        line_gap = max(1, round(line_h * 0.25));
 
         var cur2 = "";
         var wc2 = ds_list_size(words);
@@ -194,6 +194,7 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
         draw_set_font(_font);
         line_h = string_height("Ay");
         if (line_h <= 0) line_h = 16;
+        line_gap = max(1, round(line_h * 0.25));
 
         var cur3 = "";
         var wc3 = ds_list_size(words);
@@ -225,37 +226,29 @@ function scrCreateComposedSprite(_base, _char_list, _text_list, _font)
         ds_list_add(final_lines, " ");
 
     var n_lines = ds_list_size(final_lines);
-    var max_line_width = 0;
+    var total_h = n_lines * line_h + max(0, n_lines - 1) * line_gap;
 
-    for (var j = 0; j < n_lines; j++)
-    {
-        var lw = string_width(final_lines[| j]);
-        if (lw > max_line_width) max_line_width = lw;
-    }
-
-    var total_h = n_lines * line_h;
-
-    var tsw = max(1, ceil(max_line_width));
+    var tsw = max(1, ceil(inner_w));
     var tsh = max(1, ceil(total_h));
 
     var tmp = surface_create(tsw, tsh);
     surface_set_target(tmp);
     draw_clear_alpha(c_black, 0);
-    draw_set_halign(fa_left);
+    draw_set_halign(fa_center);
     draw_set_valign(fa_top);
-    draw_set_color(c_white);
+    draw_set_color(c_black);
 
     var yy = 0;
     for (var k = 0; k < n_lines; k++)
     {
-        draw_text(0, yy, final_lines[| k]);
-        yy += line_h;
+        draw_text(tsw * 0.5, yy, final_lines[| k]);
+        yy += line_h + line_gap;
     }
 
     surface_reset_target();
 
 
-    var dx = w/2 - tsw/2;
+    var dx = box_x + pad_x;
     var dy = box_y + pad_y + (inner_h - tsh)/2;
 
     draw_surface(tmp, dx, dy);

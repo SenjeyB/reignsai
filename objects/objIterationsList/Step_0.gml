@@ -31,6 +31,7 @@ if (mouse_check_button_released(mb_left)) {
 
     if (array_length(selected_items) == required_selected && global.cards_ready == 1) {
         if (point_in_rectangle(_mx, _my, button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height)) {
+            scrAudioPlayButton();
             if (required_selected == 2) {
                 global.multipliers = scrMultCalc(selected_items[0], selected_items[1]);
                 global.current_abilities[0] = selected_items[0].ability_id;

@@ -8,6 +8,7 @@ pressed = hover && mouse_check_button(mb_left);
 
 if (available_turn < global.turns_timer) {
 	if (ability_mode == ACTIVE && mouse_check_button_released(mb_left) && hover) {
+		scrAudioPlayButton();
 		scrUseAbility(ability_type);
 	}
 }

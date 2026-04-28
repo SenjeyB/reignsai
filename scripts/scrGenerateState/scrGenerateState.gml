@@ -1,4 +1,10 @@
 function scrGenerateState() {
+    // Check if stats are initialized
+    if (!variable_global_exists("stat") || !is_array(global.stat)) {
+        show_debug_message("scrGenerateState: global.stat not initialized yet, skipping");
+        return;
+    }
+
     var save_map = ds_map_create();
 
     for (var i = 0; i < array_length(global.stat); i++) {
@@ -8,9 +14,11 @@ function scrGenerateState() {
 
     var status_list = ds_list_create();
 
-    for (var i = 0; i < array_length(global.status); i++) {
-        if (global.status[i] > 0) {
-            ds_list_add(status_list, global.status_name[i]);
+    if (variable_global_exists("status") && is_array(global.status)) {
+        for (var i = 0; i < array_length(global.status); i++) {
+            if (global.status[i] > 0) {
+                ds_list_add(status_list, global.status_name[i]);
+            }
         }
     }
 

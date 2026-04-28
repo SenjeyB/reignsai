@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"sndCandleAmbient",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":45.165714,
+  "exportDir":"",
+  "name":"sndCandleAmbient",
+  "parent":{
+    "name":"ambient",
+    "path":"folders/Sounds/snd/ambient.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"sndCandleAmbient.ogg",
+  "volume":1.0,
+}
