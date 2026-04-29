@@ -37,3 +37,12 @@ rendered_desc_text = "";
 show_desc = false;
 position = 0;
 opt = noone;
+
+is_vaporizing = false;
+vapor_timer = 0;
+vapor_duration = 36;
+vapor_choice_idx = -1;
+vapor_direction = 0;
+
+edge_glow_left = 0;
+edge_glow_right = 0;

@@ -1,5 +1,4 @@
 function scrGenerateState() {
-    // Check if stats are initialized
     if (!variable_global_exists("stat") || !is_array(global.stat)) {
         show_debug_message("scrGenerateState: global.stat not initialized yet, skipping");
         return;

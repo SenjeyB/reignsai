@@ -8,7 +8,7 @@ draw_set_color(c_white);
 draw_text(display_get_gui_width() * 0.5, display_get_gui_height() * 0.3, title_text);
 
 var _start_hover = point_in_rectangle(_mx, _my, button_start_x1, button_start_y1, button_start_x2, button_start_y2);
-draw_set_color(_start_hover ? c_lime : c_green);
+draw_set_color(_start_hover ? make_color_rgb(180, 255, 180) : make_color_rgb(130, 245, 130));
 draw_rectangle(button_start_x1, button_start_y1, button_start_x2, button_start_y2, false);
 draw_set_color(c_black);
 draw_text((button_start_x1 + button_start_x2) * 0.5, (button_start_y1 + button_start_y2) * 0.5, button_start_text);
@@ -46,3 +46,10 @@ if (_sfx_fill_x > slider_sfx_x1 + 2) {
 }
 draw_set_color(c_white);
 draw_rectangle(slider_sfx_x1, slider_sfx_y1, slider_sfx_x2, slider_sfx_y2, true);
+
+if (start_transition_active) {
+    draw_set_alpha(clamp(start_transition_timer / max(1, start_transition_duration), 0, 1) * 0.75);
+    draw_set_color(c_black);
+    draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+    draw_set_alpha(1);
+}

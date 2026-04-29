@@ -1,4 +1,13 @@
 var _target_music = -1;
+if (variable_global_exists("glitch_transition_active") && global.glitch_transition_active) {
+	if (music_instance != -1) {
+		audio_stop_sound(music_instance);
+		music_instance = -1;
+	}
+	music_asset = -1;
+	exit;
+}
+
 if (room == rmMainMenu || room == rmMenu) {
 	_target_music = musMainMenu;
 } else if (room == rmScenario) {

@@ -34,11 +34,21 @@ slider_sfx_y2 = slider_sfx_y1 + slider_height;
 
 drag_music_slider = false;
 drag_sfx_slider = false;
+start_transition_active = false;
+start_transition_timer = 0;
+start_transition_duration = max(1, ceil(game_get_speed(gamespeed_fps) * 0.15));
+start_glitch_instance = -1;
 
 scrAudioEnsureDefaults();
 if (!instance_exists(objMusController)) instance_create_layer(0, 0, "Instances", objMusController);
 if (!instance_exists(objSndController)) instance_create_layer(0, 0, "Instances", objSndController);
+scrInitApiSession();
+scrGetParents();
 
 title_text = "REIGNS AI";
-button_start_text = "Start game";
+if (variable_global_exists("parents") && ds_exists(global.parents, ds_type_map) && ds_map_size(global.parents) > 0) {
+    button_start_text = "Restart the Module";
+} else {
+    button_start_text = "Start the Module";
+}
 button_exit_text = "Exit";

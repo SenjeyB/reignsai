@@ -80,7 +80,6 @@ function scrParseJson(_file) {
 
 	    result[i] = rec;
 	}
-	// Only delete temporary files, not bundled files
 	if (_file != "events.json" && _file != "game_over.json") {
 	    file_delete(_file);
 	}

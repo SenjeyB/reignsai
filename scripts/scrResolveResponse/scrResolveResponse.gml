@@ -33,7 +33,6 @@ function scrResolveResponse(){
 	            global.waiting_req = "";
 	        }
 	        ds_map_delete(global.http_save_targets, req_key);
-	        // Use fallback data so game can continue
 	        global.cards_ready = 1;
 	        global.cards_path = "events.json";
 	        exit;
@@ -57,7 +56,6 @@ function scrResolveResponse(){
 	        global.waiting_http = false;
 	        global.waiting_req = "";
 	    }
-	    // Use fallback data so game can continue
 	    global.cards_ready = 1;
 	    global.cards_path = "events.json";
 	    exit;
@@ -86,14 +84,12 @@ function scrResolveResponse(){
 	    exit;
 	}
 
-	// Validate success field in response
 	var parsed = json_parse(json_text);
 	if (is_struct(parsed) && variable_struct_exists(parsed, "success")) {
 	    if (!parsed.success) {
 	        var error_msg = variable_struct_exists(parsed, "error") ? parsed.error : "Unknown error";
 	        show_debug_message("Server returned error: " + error_msg + " - using fallback data");
 
-	        // Handle rate limit
 	        if (http_status == 429 && variable_struct_exists(parsed, "retry_after")) {
 	            show_debug_message("Rate limited. Retry after: " + string(parsed.retry_after));
 	        }
@@ -103,7 +99,6 @@ function scrResolveResponse(){
 	            global.waiting_http = false;
 	            global.waiting_req = "";
 	        }
-	        // Use fallback data so game can continue
 	        global.cards_ready = 1;
 	        global.cards_path = "events.json";
 	        exit;

@@ -1,3 +1,8 @@
+if (variable_global_exists("game_over") && global.game_over) {
+	global.can_create = false;
+	exit;
+}
+
 if(global.can_create) {
 	global.can_create = false;
 	if(current_card == array_length(parsed) && global.cards_ready == 1){
