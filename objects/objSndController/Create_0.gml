@@ -12,3 +12,9 @@ if (!variable_global_exists("glitch_transition_sound")) global.glitch_transition
 if (!variable_global_exists("glitch_stripes_on")) global.glitch_stripes_on = true;
 if (!variable_global_exists("glitch_stripes_timer")) global.glitch_stripes_timer = 0;
 if (!variable_global_exists("glitch_stripes_phase_frames")) global.glitch_stripes_phase_frames = max(1, ceil(game_get_speed(gamespeed_fps) * 0.5));
+if (!variable_global_exists("glitch_bands")) global.glitch_bands = [];
+if (!variable_global_exists("glitch_band_spawn_timer")) global.glitch_band_spawn_timer = 0;
+if (!variable_global_exists("glitch_band_next_spawn")) global.glitch_band_next_spawn = max(1, ceil(game_get_speed(gamespeed_fps) * 0.15));
+if (!variable_global_exists("menu_reveal_active")) global.menu_reveal_active = false;
+if (!variable_global_exists("menu_reveal_timer")) global.menu_reveal_timer = 0;
+if (!variable_global_exists("menu_reveal_duration")) global.menu_reveal_duration = max(1, ceil(game_get_speed(gamespeed_fps) * 0.4));

@@ -59,25 +59,8 @@ function scrAudioPlayGlitch(_random_start) {
 		_max_remaining = max(0.0, real(argument[1]));
 	}
 
-	var _candidate_names = ["sndGlitch1", "sndGlitch2", "sndGlitch3"];
-	var _resolved = [];
-	for (var i = 0; i < array_length(_candidate_names); i++) {
-		var _asset = asset_get_index(_candidate_names[i]);
-		if (_asset != -1) {
-			array_push(_resolved, _asset);
-		}
-	}
-
-	if (array_length(_resolved) <= 0) {
-		var _fallback_instance = scrAudioPlayButton();
-		return {
-			instance: _fallback_instance,
-			sound: -1,
-			length: 0.0
-		};
-	}
-
-	var _sound = _resolved[irandom(array_length(_resolved) - 1)];
+	var _sound_pool = [sndGlitch1, sndGlitch2, sndGlitch3];
+	var _sound = _sound_pool[irandom(array_length(_sound_pool) - 1)];
 	var _length = max(0.0, audio_sound_length(_sound));
 	var _start_pos = 0.0;
 	if (_max_remaining > 0.0 && _length > _max_remaining) {
@@ -85,16 +68,31 @@ function scrAudioPlayGlitch(_random_start) {
 	}
 	scrAudioEnsureDefaults();
 	var _instance = audio_play_sound(_sound, 100, false);
-	audio_sound_gain(_instance, max(0.85, global.audio_sfx_volume), 0);
+	if (_instance == -1) {
+		for (var i = 0; i < array_length(_sound_pool); i++) {
+			if (_sound_pool[i] == _sound) continue;
+			_sound = _sound_pool[i];
+			_length = max(0.0, audio_sound_length(_sound));
+			_start_pos = 0.0;
+			if (_max_remaining > 0.0 && _length > _max_remaining) {
+				_start_pos = _length - _max_remaining;
+			}
+			_instance = audio_play_sound(_sound, 100, false);
+			if (_instance != -1) break;
+		}
+	}
+	if (_instance != -1) {
+		audio_sound_gain(_instance, 1.35, 0);
+	}
 	if (_random_start) {
-		if (_length > 0.08) {
+		if (_instance != -1 && _length > 0.08) {
 			_start_pos = random(_length * 0.7);
 			if (_max_remaining > 0.0 && (_length - _start_pos) > _max_remaining) {
 				_start_pos = _length - _max_remaining;
 			}
 			audio_sound_set_track_position(_instance, _start_pos);
 		}
-	} else if (_start_pos > 0.0) {
+	} else if (_instance != -1 && _start_pos > 0.0) {
 		audio_sound_set_track_position(_instance, _start_pos);
 	}
 	return {

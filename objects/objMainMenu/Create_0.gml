@@ -39,6 +39,10 @@ start_transition_timer = 0;
 start_transition_duration = max(1, ceil(game_get_speed(gamespeed_fps) * 0.15));
 start_glitch_instance = -1;
 
+if (!variable_global_exists("menu_reveal_active")) global.menu_reveal_active = false;
+if (!variable_global_exists("menu_reveal_timer")) global.menu_reveal_timer = 0;
+if (!variable_global_exists("menu_reveal_duration")) global.menu_reveal_duration = max(1, ceil(game_get_speed(gamespeed_fps) * 0.5));
+
 scrAudioEnsureDefaults();
 if (!instance_exists(objMusController)) instance_create_layer(0, 0, "Instances", objMusController);
 if (!instance_exists(objSndController)) instance_create_layer(0, 0, "Instances", objSndController);
@@ -48,7 +52,9 @@ scrGetParents();
 title_text = "REIGNS AI";
 if (variable_global_exists("parents") && ds_exists(global.parents, ds_type_map) && ds_map_size(global.parents) > 0) {
     button_start_text = "Restart the Module";
+    start_is_restart = true;
 } else {
     button_start_text = "Start the Module";
+    start_is_restart = false;
 }
 button_exit_text = "Exit";

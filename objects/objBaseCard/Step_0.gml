@@ -121,12 +121,9 @@ if (mouse_check_button_released(mb_left)) {
         global.glitch_transition_visual_duration = global.glitch_transition_duration;
         global.glitch_transition_instance = _glitch_instance;
         global.glitch_transition_sound = _glitch_sound;
-        global.glitch_stripes_on = true;
-        global.glitch_stripes_timer = 0;
-        global.glitch_stripes_phase_frames = irandom_range(
-            max(1, ceil(_fps * 0.5)),
-            max(1, ceil(_fps * 1.0))
-        );
+        global.glitch_bands = [];
+        global.glitch_band_spawn_timer = 0;
+        global.glitch_band_next_spawn = 1;
         if (variable_global_exists("current_card_id") && global.current_card_id == id) {
             global.current_card_id = noone;
         }

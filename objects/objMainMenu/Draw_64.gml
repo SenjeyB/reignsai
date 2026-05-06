@@ -53,3 +53,11 @@ if (start_transition_active) {
     draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
     draw_set_alpha(1);
 }
+
+if (variable_global_exists("menu_reveal_active") && global.menu_reveal_active) {
+    var _reveal_t = clamp(global.menu_reveal_timer / max(1, global.menu_reveal_duration), 0, 1);
+    draw_set_alpha(1 - _reveal_t);
+    draw_set_color(c_black);
+    draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+    draw_set_alpha(1);
+}

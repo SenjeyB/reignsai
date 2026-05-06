@@ -17,7 +17,7 @@
     "name":"glitch",
     "path":"folders/Sounds/snd/glitch.yy",
   },
-  "preload":false,
+  "preload":true,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
