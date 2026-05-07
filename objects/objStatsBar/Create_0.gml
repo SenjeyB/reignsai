@@ -20,6 +20,8 @@ smoothing_speed = 8;
 change_display_time = 60;
 change_threshold = 0.5;
 
+month_bar_extra_gap = 6;
+
 n_bars = array_length(bar_keys);
 bar_target = array_create(n_bars, 0);
 bar_display = array_create(n_bars, 0);

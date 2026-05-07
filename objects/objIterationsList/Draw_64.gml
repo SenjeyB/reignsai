@@ -34,7 +34,7 @@ for (var i = 0; i < _len; i++) {
     var _iteration_val = 0;
     if (variable_struct_exists(_item, "iteration")) _iteration_val = _item.iteration;
 
-    var _name = "Iteration #" + string(_iteration_val);
+    var _name = scrNamesParentLabel(_item);
 
     var _is_hover = point_in_rectangle(_mx, _my, _ix, _iy, _ix + menu_width, _iy + item_height);
 
@@ -67,10 +67,7 @@ draw_text(_display_x, _display_y, "Picked iterations: " + string(array_length(se
 
 for (var k = 0; k < array_length(selected_items); k++) {
     var _struct = selected_items[k];
-    var _iter_num = 0;
-    if (variable_struct_exists(_struct, "iteration")) _iter_num = _struct.iteration;
-
-    var _draw_text = string(k + 1) + ". Iteration #" + string(_iter_num);
+    var _draw_text = string(k + 1) + ". " + scrNamesParentLabel(_struct);
 
     var _sy = _display_y + 30 + (k * 25);
     draw_text(_display_x, _sy, _draw_text);

@@ -63,7 +63,7 @@ if (edge_glow_left > 0.01 || edge_glow_right > 0.01) {
 if (is_vaporizing) exit;
 
 if ((opt != noone && opt.option_type == 1) || position == 1) {
-    scrDrawBottomBox(desc_opt1, "PressStart2P.ttf");
+    scrDrawBottomBox(desc_opt1, fntPS2P_stats);
 } else if ((opt != noone && opt.option_type == 2) || position == 2) {
-    scrDrawBottomBox(desc_opt2, "PressStart2P.ttf");
+    scrDrawBottomBox(desc_opt2, fntPS2P_stats);
 }

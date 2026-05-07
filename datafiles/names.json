@@ -1,0 +1,24 @@
+{
+    "first_names": [
+        "William", "James", "Edward", "Henry", "Richard", "Charles", "Robert",
+        "Thomas", "John", "Arthur", "George", "Frederick", "Walter", "Albert",
+        "Edmund", "Oliver", "Philip", "Stephen", "Lawrence", "Maxwell",
+        "Geoffrey", "Hugh", "Roland", "Alfred", "Cedric", "Percival",
+        "Reginald", "Theodore", "Bartholomew", "Nicholas"
+    ],
+    "last_names": [
+        "Whitcombe", "Ashworth", "Blackwood", "Hartwell", "Pemberton",
+        "Sinclair", "Underwood", "Calloway", "Marlowe", "Fairfax",
+        "Westbrook", "Chamberlain", "Whitfield", "Ravenscroft", "Lockwood",
+        "Holloway", "Caldwell", "Beaumont", "Sterling", "Aldridge",
+        "Ellingsworth", "Thornbury", "Ashby", "Norwood", "Carrington",
+        "Drummond", "Fenwick", "Hawthorne", "Kingsley", "Pendragon"
+    ],
+    "nicknames": [
+        "Great", "Dumbest", "Warrior", "Bold", "Wise", "Fearless", "Cruel",
+        "Mad", "Drunk", "Just", "Quiet", "Terrible", "Glorious", "Cursed",
+        "Pious", "Restless", "Forgetful", "Ambitious", "Lonely", "Lucky",
+        "Unready", "Bald", "Confused", "Brave", "Devout", "Wandering",
+        "Indecisive", "Hammer", "Lionheart", "Stout"
+    ]
+}

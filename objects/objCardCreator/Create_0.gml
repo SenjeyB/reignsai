@@ -1,8 +1,9 @@
 global.can_create = true;
-if (variable_global_exists("cards_path") && global.cards_path != "") {
-    parsed = scrParseJson(global.cards_path);
-} else {
-    parsed = [];
+parsed = scrCardsTakeBatch();
+if (variable_global_exists("cards_reseed_after_restart") && global.cards_reseed_after_restart) {
+    global.cards_queue = [];
+    global.cards_reseed_after_restart = false;
+    scrCardsUpdateReadyFlag();
+    scrCardsEnsureQueue();
 }
-global.create_request = true;
 current_card = 0;

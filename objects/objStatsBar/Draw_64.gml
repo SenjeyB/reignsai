@@ -6,6 +6,20 @@ draw_set_font(fntPS2P_stats)
 var bx = gui_x;
 var by = gui_y;
 
+if (variable_global_exists("player_name") && is_struct(global.player_name)) {
+    var _name_text = scrNamesFormat(global.player_name);
+    if (string_length(_name_text) > 0) {
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_top);
+        draw_set_color(make_color_rgb(20, 20, 20));
+        draw_text(bx + 1, by - 26 + 1, _name_text);
+        draw_set_color(make_color_rgb(230, 230, 230));
+        draw_text(bx, by - 26, _name_text);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+    }
+}
+
 for (var i = 0; i < n_bars; ++i) {
     var name = bar_names[i];
     var col = bar_colors[i];
@@ -73,6 +87,40 @@ for (var i = 0; i < n_bars; ++i) {
         draw_set_alpha(1);
     }
 }
+
+var month_y_top = by + n_bars * (bar_height + bar_spacing) + month_bar_extra_gap;
+var month_h = bar_height;
+var month_col = scrCalendarMonthColor();
+
+var mr = color_get_red(month_col);
+var mg = color_get_green(month_col);
+var mb = color_get_blue(month_col);
+var month_light = make_color_rgb(
+    floor(lerp(mr, 255, 0.25)),
+    floor(lerp(mg, 255, 0.25)),
+    floor(lerp(mb, 255, 0.25))
+);
+
+draw_set_alpha(0.95);
+draw_set_color(make_color_rgb(38, 38, 38));
+draw_rectangle(bx, month_y_top, bx + bar_width, month_y_top + month_h, false);
+draw_rectangle_color(
+    bx, month_y_top, bx + bar_width, month_y_top + month_h,
+    month_light, month_light, month_col, month_col, false
+);
+draw_set_color(make_color_rgb(28, 28, 28));
+draw_rectangle(bx, month_y_top, bx + bar_width, month_y_top + month_h, true);
+
+draw_set_alpha(1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
+var month_txt = scrCalendarMonthName() + ", Year " + string(scrCalendarReignYear());
+var month_tx = bx + bar_width * 0.5;
+var month_ty = month_y_top + month_h * 0.5;
+draw_set_color(make_color_rgb(18, 18, 18));
+draw_text(month_tx + 1, month_ty + 1, month_txt);
+draw_set_color(make_color_rgb(230, 230, 230));
+draw_text(month_tx, month_ty, month_txt);
 
 draw_set_color(c_white);
 draw_set_alpha(1);

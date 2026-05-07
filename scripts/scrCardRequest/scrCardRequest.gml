@@ -1,15 +1,81 @@
+function scrCardsEnsureState() {
+    if (!variable_global_exists("http_save_targets")) global.http_save_targets = ds_map_create();
+    if (!variable_global_exists("waiting_http")) global.waiting_http = false;
+    if (!variable_global_exists("waiting_req")) global.waiting_req = "";
+    if (!variable_global_exists("cards_queue")) global.cards_queue = [];
+    if (!variable_global_exists("cards_queue_limit")) global.cards_queue_limit = 5;
+    if (!variable_global_exists("cards_prefetch_enabled")) global.cards_prefetch_enabled = false;
+    if (!variable_global_exists("cards_reseed_after_restart")) global.cards_reseed_after_restart = false;
+    if (!variable_global_exists("cards_ready")) global.cards_ready = 0;
+    if (!variable_global_exists("cards_path")) global.cards_path = "";
+    if (!variable_global_exists("api_session_id")) global.api_session_id = "";
+    if (!variable_global_exists("api_session_init_pending")) global.api_session_init_pending = false;
+    if (!variable_global_exists("api_session_init_req")) global.api_session_init_req = "";
+    if (!variable_global_exists("api_session_init_attempted")) global.api_session_init_attempted = false;
+    if (!variable_global_exists("api_last_error")) global.api_last_error = "";
+    global.cards_queue_limit = max(1, real(global.cards_queue_limit));
+}
+
+function scrApiSetError(_msg) {
+    global.api_last_error = is_string(_msg) ? _msg : string(_msg);
+}
+
+function scrApiClearError() {
+    global.api_last_error = "";
+}
+
+function scrCardsUpdateReadyFlag() {
+    scrCardsEnsureState();
+    global.cards_ready = (array_length(global.cards_queue) > 0) ? 1 : 0;
+}
+
+function scrCardsPushBatch(_cards) {
+    scrCardsEnsureState();
+    if (!is_array(_cards) || array_length(_cards) <= 0) return false;
+    if (array_length(global.cards_queue) >= global.cards_queue_limit) return false;
+    array_push(global.cards_queue, _cards);
+    scrCardsUpdateReadyFlag();
+    return true;
+}
+
+function scrCardsTakeBatch() {
+    scrCardsEnsureState();
+    if (array_length(global.cards_queue) <= 0) {
+        scrCardsUpdateReadyFlag();
+        return [];
+    }
+
+    var _batch = global.cards_queue[0];
+    array_delete(global.cards_queue, 0, 1);
+    scrCardsUpdateReadyFlag();
+    return _batch;
+}
+
+function scrCardsEnsureQueue() {
+    scrCardsEnsureState();
+    if (!global.cards_prefetch_enabled) return;
+    if (global.waiting_http) return;
+    if (array_length(global.cards_queue) >= global.cards_queue_limit) return;
+    if (global.api_session_init_pending) return;
+    if (string_length(global.api_session_id) <= 0 && !global.api_session_init_attempted) {
+        scrInitApiSession();
+        return;
+    }
+
+    scrCardRequest(5);
+}
+
 function scrCardRequest(_count) {
+    scrCardsEnsureState();
     if (global.waiting_http) {
         show_debug_message("HTTP request already in progress");
         return;
     }
 
     global.waiting_http = true;
-    global.cards_ready = 0;
-	
-	scrGenerateState();
+    scrGenerateState();
 
-    var base_url = "http://localhost:5000";
+    var base_url = "http://146.103.105.166:5000";
     var url = base_url + "/api/v1/cards/generate";
 
     var _resources = 50;
@@ -25,7 +91,7 @@ function scrCardRequest(_count) {
 
     var _payload = ds_map_create();
     _payload[? "count"] = _count;
-    if (variable_global_exists("api_session_id") && string_length(global.api_session_id) > 0) {
+    if (string_length(global.api_session_id) > 0) {
         _payload[? "session_id"] = global.api_session_id;
     }
     var _attrs = ds_map_create();
@@ -48,6 +114,8 @@ function scrCardRequest(_count) {
     _status_values[? "in_war"] = _in_war;
     ds_map_add_map(_payload, "status_values", _status_values);
 
+    _payload[? "month"] = scrCalendarMonthName();
+
     var _payload_json = json_encode(_payload);
     ds_map_destroy(_payload);
 
@@ -59,18 +127,16 @@ function scrCardRequest(_count) {
     _headers[? "Content-Type"] = "application/json";
     var req_id = http_request(url, "POST", _headers, _payload_json);
     ds_map_destroy(_headers);
-    ds_map_add(global.http_save_targets, string(req_id), "upcoming_events.json");
+    ds_map_add(global.http_save_targets, string(req_id), "__cards_batch__");
     global.waiting_req = string(req_id);
 }
 
-
 function scrInitApiSession() {
-    if (variable_global_exists("api_session_init_pending") && global.api_session_init_pending) return;
-    if (!variable_global_exists("http_save_targets")) {
-        global.http_save_targets = ds_map_create();
-    }
+    scrCardsEnsureState();
+    if (global.api_session_init_pending) return;
+    if (string_length(global.api_session_id) > 0) return;
 
-    var base_url = "http://localhost:5000";
+    var base_url = "http://146.103.105.166:5000";
     var url = base_url + "/api/v1/session/init";
 
     var headers = ds_map_create();
@@ -78,8 +144,8 @@ function scrInitApiSession() {
     var req_id = http_request(url, "POST", headers, "{}");
     ds_map_destroy(headers);
 
-    global.api_session_id = "";
     global.api_session_init_pending = true;
     global.api_session_init_req = string(req_id);
+    global.api_session_init_attempted = true;
     ds_map_add(global.http_save_targets, string(req_id), "__session_init__");
 }

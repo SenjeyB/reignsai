@@ -36,14 +36,17 @@ if (mouse_check_button_released(mb_left)) {
                 global.multipliers = scrMultCalc(selected_items[0], selected_items[1]);
                 global.current_abilities[0] = selected_items[0].ability_id;
                 global.current_abilities[1] = selected_items[1].ability_id;
+                global.selected_parents = [selected_items[0], selected_items[1]];
             } else if (required_selected == 1) {
                 global.multipliers = scrMultCalc(selected_items[0], selected_items[0]);
                 global.current_abilities[0] = selected_items[0].ability_id;
                 global.current_abilities[1] = -1;
+                global.selected_parents = [selected_items[0]];
             } else {
                 global.multipliers = [1, 1, 1, 1];
                 global.current_abilities[0] = -1;
                 global.current_abilities[1] = -1;
+                global.selected_parents = [];
             }
 
             room_goto(rmScenario);

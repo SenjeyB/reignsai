@@ -93,4 +93,6 @@ function scrMacroInit() {
 	global.ability_list[RESOURCES] = [PAY_TAXES, BRIBERY];
 	global.ability_list[SCIENCE] = [MANHATTAN_PROJECT, SCIENTIFIC_AMBITIONS];
 	global.ability_list[SUPPORT] = [UNEMOTIONAL_COMMUNITY, PUBLIC_SPEECH];
+
+	scrNamesLoad();
 }

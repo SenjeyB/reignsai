@@ -3,7 +3,7 @@ function scrCreateCard(_card_base) {
 	
 	sprBaseRect = sprCardBase;
 
-	var final_sprite = scrCreateComposedSprite(sprBaseRect, _card_base.situation, "PressStart2P.ttf");
+	var final_sprite = scrCreateComposedSprite(sprBaseRect, _card_base.situation, fntPS2P_stats);
 	with instance_create_layer(display_get_width()/2, display_get_height()/2, "Instances", objBaseCard) {
 	    sprite_index = final_sprite;
 		stat = [];

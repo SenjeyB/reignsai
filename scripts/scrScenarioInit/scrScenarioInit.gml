@@ -11,6 +11,17 @@ function scrScenarioInit(_multipliers){
 		floor(global.stat_maximum[ARMY_POWER] / 2), 
 		floor(global.stat_maximum[SCIENCE] / 2)
 	];
+	global.run_start_stat = [global.stat[0], global.stat[1], global.stat[2], global.stat[3]];
+	global.run_stats_recorded = false;
+	global.turns_timer = 0;
+	global.start_month_index = irandom(11);
+
+	var _parents_count = (variable_global_exists("selected_parents") && is_array(global.selected_parents)) ? array_length(global.selected_parents) : 0;
+	if (global.player_iterations <= 2 || _parents_count < 2) {
+		global.player_name = scrNamesGenerateRandom();
+	} else {
+		global.player_name = scrNamesGenerateInherited(global.selected_parents[0], global.selected_parents[1]);
+	}
 	
 	global.game_over = false;
 	global.game_over_ambient_played = false;

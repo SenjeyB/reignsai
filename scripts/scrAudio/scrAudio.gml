@@ -1,6 +1,49 @@
+function scrAudioLoadSettings() {
+	if (!file_exists("settings.json")) return;
+	var f = file_text_open_read("settings.json");
+	if (f == -1) return;
+	var content = "";
+	while (!file_text_eof(f)) content += file_text_readln(f);
+	file_text_close(f);
+
+	if (string_length(content) > 0 && ord(string_char_at(content, 1)) == 65279) {
+		content = string_delete(content, 1, 1);
+	}
+
+	try {
+		var parsed = json_parse(content);
+		if (!is_struct(parsed)) return;
+		if (variable_struct_exists(parsed, "audio_music_volume")) {
+			global.audio_music_volume = clamp(real(parsed.audio_music_volume), 0, 1);
+		}
+		if (variable_struct_exists(parsed, "audio_sfx_volume")) {
+			global.audio_sfx_volume = clamp(real(parsed.audio_sfx_volume), 0, 1);
+		}
+	} catch (_e) {
+		show_debug_message("scrAudioLoadSettings: failed to parse settings.json");
+	}
+}
+
+function scrAudioSaveSettings() {
+	var data = {
+		audio_music_volume: global.audio_music_volume,
+		audio_sfx_volume: global.audio_sfx_volume
+	};
+	var content = json_stringify(data);
+	var f = file_text_open_write("settings.json");
+	if (f == -1) return;
+	file_text_write_string(f, content);
+	file_text_close(f);
+}
+
 function scrAudioEnsureDefaults() {
 	if (!variable_global_exists("audio_music_volume")) global.audio_music_volume = 0.8;
 	if (!variable_global_exists("audio_sfx_volume")) global.audio_sfx_volume = 0.8;
+
+	if (!variable_global_exists("audio_settings_loaded")) {
+		global.audio_settings_loaded = true;
+		scrAudioLoadSettings();
+	}
 
 	global.audio_music_volume = clamp(global.audio_music_volume, 0, 1);
 	global.audio_sfx_volume = clamp(global.audio_sfx_volume, 0, 1);
@@ -17,11 +60,14 @@ function scrAudioSetMusicVolume(_value) {
 			}
 		}
 	}
+
+	scrAudioSaveSettings();
 }
 
 function scrAudioSetSfxVolume(_value) {
 	scrAudioEnsureDefaults();
 	global.audio_sfx_volume = clamp(_value, 0, 1);
+	scrAudioSaveSettings();
 }
 
 function scrAudioPlaySfx(_sound) {

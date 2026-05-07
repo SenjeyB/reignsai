@@ -8,7 +8,7 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 	exit;
 }
 
-if (room == rmMainMenu || room == rmMenu) {
+if (room == rmMainMenu || room == rmMenu || room == rmStatsMenu || room == rmSettingsMenu) {
 	_target_music = musMainMenu;
 } else if (room == rmScenario) {
 	var _is_game_over = variable_global_exists("game_over") && global.game_over;

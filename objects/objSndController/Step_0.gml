@@ -90,6 +90,8 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 		global.glitch_band_next_spawn = max(1, ceil(_fps * 0.2));
 		if (_target_room != -1) {
 			if (_target_room == rmMainMenu) {
+				global.cards_refresh_on_mainmenu = true;
+				global.cards_reseed_after_restart = true;
 				global.menu_reveal_active = true;
 				global.menu_reveal_timer = 0;
 				global.menu_reveal_duration = max(1, ceil(_fps * 0.5));
