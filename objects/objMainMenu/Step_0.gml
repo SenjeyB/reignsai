@@ -50,6 +50,12 @@ if (point_in_rectangle(_mx, _my, button_start_x1, button_start_y1, button_start_
     exit;
 }
 
+if (point_in_rectangle(_mx, _my, button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2)) {
+    scrAudioPlayButton();
+    room_goto(rmTutorialMenu);
+    exit;
+}
+
 if (point_in_rectangle(_mx, _my, button_stats_x1, button_stats_y1, button_stats_x2, button_stats_y2)) {
     scrAudioPlayButton();
     room_goto(rmStatsMenu);

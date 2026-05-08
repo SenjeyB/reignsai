@@ -15,7 +15,7 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
     var box_w = w * 0.86;
     var box_x = (w - box_w) / 2;
     var box_y = origin_y + 30;
-    var box_bottom = h * 0.88;
+    var box_bottom = h * 0.96;
     var box_h = max(40, box_bottom - box_y);
 
     var pad_x = box_w * 0.08;

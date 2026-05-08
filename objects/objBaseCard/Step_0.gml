@@ -3,10 +3,22 @@ position = 0;
 var mx = device_mouse_x(0);
 var my = device_mouse_y(0);
 
+var top_inset = card_h * 0.18;
 var left = x - card_w/2;
 var right = x + card_w/2;
-var top = y - card_h/2;
+var top = y - card_h/2 + top_inset;
 var bottom = y + card_h/2;
+
+if (is_exiting_up) {
+    exit_timer += 1;
+    if (exit_timer >= exit_duration) {
+        if (variable_global_exists("current_card_id") && global.current_card_id == id) {
+            global.current_card_id = noone;
+        }
+        instance_destroy();
+    }
+    exit;
+}
 
 if (is_vaporizing) {
     grabbed = false;
@@ -65,13 +77,13 @@ if (grabbed) {
     angle_target = 0;
     offset_target = 0;
 
-    if (mx > (x - card_w/2) - corner_extend && mx < (x - card_w/2) + corner_w && my > (y - card_h/2) && my < (y - card_h/2) + corner_h + corner_extend) {
+    if (mx > (x - card_w/2) - corner_extend && mx < (x - card_w/2) + corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
         angle_target = tilt_angle;
         offset_target = -tilt_offset;
 		position = 1;
     }
 
-    if (mx < (x + card_w/2) + corner_extend && mx > (x + card_w/2) - corner_w && my > (y - card_h/2) && my < (y - card_h/2) + corner_h + corner_extend) {
+    if (mx < (x + card_w/2) + corner_extend && mx > (x + card_w/2) - corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
         angle_target = -tilt_angle;
         offset_target = tilt_offset;
 		position = 2;

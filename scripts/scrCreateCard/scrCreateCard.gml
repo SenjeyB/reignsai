@@ -18,6 +18,10 @@ function scrCreateCard(_card_base) {
 		desc_opt1 = _card_base.desc_opt1;
 		desc_opt2 = _card_base.desc_opt2;
 		global.current_card_id = id;
+
+		y = home_y - 1200;
+		angle = choose(-1, 1) * (6 + irandom(8));
+		offset = irandom_range(-20, 20);
 	}
 
 	if (!global.game_over) {

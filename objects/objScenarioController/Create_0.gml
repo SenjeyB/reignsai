@@ -7,23 +7,19 @@ with instance_create_layer(1824, 544, "instances", objOption) {
 }
 
 if (global.current_abilities[0] == -1) return;
-with instance_create_layer(96, 800, "instances", objAbility) {
+with instance_create_layer(1640, 105, "instances", objAbility) {
 	ability_type = global.current_abilities[0];
 	ability_mode = global.ability_mode[ability_type];
-	if (ability_mode == PASSIVE) {
-		sprite_index = sprAbilityBasePassive;
-	} else {
-		sprite_index = sprAbilityBaseActive;
-	}
+	sprite_index = sprAbilitySlot;
+	image_xscale = 1.5;
+	image_yscale = 1.5;
 }
 
 if (global.current_abilities[1] == -1) return;
-with instance_create_layer(1824, 800, "instances", objAbility) {
+with instance_create_layer(1810, 105, "instances", objAbility) {
 	ability_type = global.current_abilities[1];
 	ability_mode = global.ability_mode[ability_type];
-	if (ability_mode == PASSIVE) {
-		sprite_index = sprAbilityBasePassive;
-	} else {
-		sprite_index = sprAbilityBaseActive;
-	}
+	sprite_index = sprAbilitySlot;
+	image_xscale = 1.5;
+	image_yscale = 1.5;
 }

@@ -44,5 +44,9 @@ vapor_duration = 36;
 vapor_choice_idx = -1;
 vapor_direction = 0;
 
+is_exiting_up = false;
+exit_timer = 0;
+exit_duration = max(1, ceil(game_get_speed(gamespeed_fps) * 0.55));
+
 edge_glow_left = 0;
 edge_glow_right = 0;

@@ -28,10 +28,22 @@ function scrDrawBottomBox(_text, _base_font)
 	var pos = 1;
 	var len = string_length(text_value);
 	while (pos <= len) {
-	    while (pos <= len && string_char_at(text_value, pos) == " ") pos++;
-	    if (pos > len) break;
+	    var c = string_char_at(text_value, pos);
+	    if (c == "\n") {
+	        ds_list_add(words, "\n");
+	        pos++;
+	        continue;
+	    }
+	    if (c == " ") {
+	        pos++;
+	        continue;
+	    }
 	    var s = pos;
-	    while (pos <= len && string_char_at(text_value, pos) != " ") pos++;
+	    while (pos <= len) {
+	        var c2 = string_char_at(text_value, pos);
+	        if (c2 == " " || c2 == "\n") break;
+	        pos++;
+	    }
 	    ds_list_add(words, string_copy(text_value, s, pos - s));
 	}
 	if (ds_list_size(words) == 0) ds_list_add(words, " ");
@@ -58,6 +70,11 @@ function scrDrawBottomBox(_text, _base_font)
 
 	    for (var i = 0; i < wc; i++) {
 	        var wword = words[| i];
+	        if (wword == "\n") {
+	            lines_needed++;
+	            cur = "";
+	            continue;
+	        }
 	        var ww = string_width(wword) * mid;
 	        if (ww > inner_w) { too_large = true; break; }
 	        var cand = (cur == "") ? wword : cur + " " + wword;
@@ -81,16 +98,19 @@ function scrDrawBottomBox(_text, _base_font)
 	var wc2 = ds_list_size(words);
 	for (var i2 = 0; i2 < wc2; i2++) {
 	    var wword2 = words[| i2];
+	    if (wword2 == "\n") {
+	        ds_list_add(final_lines, cur2);
+	        cur2 = "";
+	        continue;
+	    }
 	    var cand2 = (cur2 == "") ? wword2 : cur2 + " " + wword2;
 	    if (string_width(cand2) * best_scale <= inner_w) cur2 = cand2;
 	    else {
 	        ds_list_add(final_lines, cur2);
 	        cur2 = wword2;
 	    }
-	    if (i2 == wc2 - 1) {
-	        if (cur2 != "") ds_list_add(final_lines, cur2);
-	    }
 	}
+	if (cur2 != "") ds_list_add(final_lines, cur2);
 	if (ds_list_size(final_lines) == 0) ds_list_add(final_lines, " ");
 
 	var n_lines = ds_list_size(final_lines);

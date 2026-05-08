@@ -1,4 +1,5 @@
 scrAudioEnsureDefaults();
+if (!instance_exists(objBgScroller)) instance_create_layer(0, 0, "Instances", objBgScroller);
 
 title_text = "SETTINGS";
 status_text = "";

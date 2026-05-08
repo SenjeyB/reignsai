@@ -14,6 +14,17 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 	}
 	global.glitch_bands = _alive_bands;
 
+	var _alive_vbands = [];
+	var _vband_count = array_length(global.glitch_vbands);
+	for (var i = 0; i < _vband_count; i++) {
+		var _vband = global.glitch_vbands[i];
+		_vband.life -= 1;
+		if (_vband.life > 0) {
+			array_push(_alive_vbands, _vband);
+		}
+	}
+	global.glitch_vbands = _alive_vbands;
+
 	global.glitch_band_spawn_timer += 1;
 	if (global.glitch_band_spawn_timer >= global.glitch_band_next_spawn) {
 		global.glitch_band_spawn_timer = 0;
@@ -65,6 +76,40 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 		}
 	}
 
+	global.glitch_vband_spawn_timer += 1;
+	if (global.glitch_vband_spawn_timer >= global.glitch_vband_next_spawn) {
+		global.glitch_vband_spawn_timer = 0;
+		global.glitch_vband_next_spawn = irandom_range(
+			max(1, ceil(_fps * 0.12)),
+			max(1, ceil(_fps * 0.35))
+		);
+
+		var _vgh = display_get_gui_height();
+		var _vgw = display_get_gui_width();
+		var _v_count = irandom_range(2, 5);
+		var _v_life = irandom_range(
+			max(1, ceil(_fps * 0.12)),
+			max(1, ceil(_fps * 0.35))
+		);
+
+		for (var _v_i = 0; _v_i < _v_count; _v_i++) {
+			var _v_h = irandom_range(6, 60);
+			var _v_y = irandom_range(0, max(1, _vgh - _v_h));
+			var _v_offset = choose(-1, 1) * irandom_range(60, max(80, floor(_vgw * 0.45)));
+			var _v_alpha = (irandom(1) == 0) ? 1.0 : 0.75;
+			var _v_blend = choose(bm_normal, bm_normal, bm_add, bm_subtract);
+			array_push(global.glitch_vbands, {
+				src_y: _v_y,
+				src_h: _v_h,
+				offset: _v_offset,
+				blend: _v_blend,
+				alpha: _v_alpha,
+				life: _v_life,
+				max_life: _v_life
+			});
+		}
+	}
+
 	var _sound_playing = false;
 	if (global.glitch_transition_instance != -1) {
 		_sound_playing = audio_is_playing(global.glitch_transition_instance);
@@ -88,6 +133,9 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 		global.glitch_bands = [];
 		global.glitch_band_spawn_timer = 0;
 		global.glitch_band_next_spawn = max(1, ceil(_fps * 0.2));
+		global.glitch_vbands = [];
+		global.glitch_vband_spawn_timer = 0;
+		global.glitch_vband_next_spawn = max(1, ceil(_fps * 0.2));
 		if (_target_room != -1) {
 			if (_target_room == rmMainMenu) {
 				global.cards_refresh_on_mainmenu = true;
@@ -104,6 +152,9 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 
 if (array_length(global.glitch_bands) > 0) {
 	global.glitch_bands = [];
+}
+if (array_length(global.glitch_vbands) > 0) {
+	global.glitch_vbands = [];
 }
 
 if (room != rmScenario) {

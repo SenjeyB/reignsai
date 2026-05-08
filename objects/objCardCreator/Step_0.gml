@@ -1,4 +1,10 @@
 if (variable_global_exists("game_over") && global.game_over) {
+	if (variable_global_exists("game_over_card_pending") && global.game_over_card_pending) {
+		if (instance_number(objBaseCard) == 0 && variable_global_exists("game_over_card_data") && is_struct(global.game_over_card_data)) {
+			global.game_over_card_pending = false;
+			scrCreateCard(global.game_over_card_data);
+		}
+	}
 	global.can_create = false;
 	exit;
 }

@@ -9,15 +9,23 @@ if (is_vaporizing) {
     _vapor_progress = clamp(vapor_timer / vapor_duration, 0, 1);
 }
 
+var _exit_progress = 0;
+if (is_exiting_up) {
+    _exit_progress = clamp(exit_timer / exit_duration, 0, 1);
+}
+
 var _vapor_scale = 1 - (_vapor_progress * 0.24);
 var _vapor_alpha = 1 - (_vapor_progress * 0.95);
 xx += vapor_direction * _vapor_progress * 120;
 yy -= _vapor_progress * 54;
+yy -= _exit_progress * 900;
+
+var _draw_alpha = _vapor_alpha * (1 - _exit_progress);
 
 var m = matrix_build(xx, yy, 0, grab_angle_x, grab_angle_y, angle, _vapor_scale, _vapor_scale, 1);
 matrix_set(matrix_world, m);
 
-draw_sprite_ext(sprite_index, image_index, draw_x, draw_y, 1, 1, 0, c_white, _vapor_alpha);
+draw_sprite_ext(sprite_index, image_index, draw_x, draw_y, 1, 1, 0, c_white, _draw_alpha);
 
 if (is_vaporizing) {
     gpu_set_blendmode(bm_add);

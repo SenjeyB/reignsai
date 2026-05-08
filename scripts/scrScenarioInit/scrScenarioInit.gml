@@ -25,9 +25,12 @@ function scrScenarioInit(_multipliers){
 	
 	global.game_over = false;
 	global.game_over_ambient_played = false;
+	global.game_over_card_pending = false;
+	global.game_over_card_data = undefined;
 	
 	global.choices_done = [0, 0, 0, 0]; 
 	
 	instance_create_layer(x, y, "instances", objCardCreator);
 	instance_create_layer(x, y, "instances", objStatsBar);
+	instance_create_layer(x, y, "instances", objLoadingSpinner);
 }

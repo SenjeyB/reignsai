@@ -76,8 +76,7 @@ for (var k = 0; k < array_length(selected_items); k++) {
 if (array_length(selected_items) == required_selected && global.cards_ready == 1) {
     var _button_hover = point_in_rectangle(_mx, _my, button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height);
 
-    draw_set_color(_button_hover ? c_green : c_lime);
-    draw_rectangle(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, false);
+    scrDrawButton(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, _button_hover ? c_green : c_lime);
 
     draw_set_color(c_black);
     draw_set_halign(fa_center);
@@ -87,8 +86,7 @@ if (array_length(selected_items) == required_selected && global.cards_ready == 1
     draw_set_valign(fa_top);
     draw_set_color(c_white);
 } else if (array_length(selected_items) == required_selected) {
-    draw_set_color(c_gray);
-    draw_rectangle(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, false);
+    scrDrawButton(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, c_gray);
 
     draw_set_color(c_black);
     draw_set_halign(fa_center);
@@ -98,8 +96,7 @@ if (array_length(selected_items) == required_selected && global.cards_ready == 1
     draw_set_valign(fa_top);
     draw_set_color(c_white);
 } else {
-    draw_set_color(c_gray);
-    draw_rectangle(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, false);
+    scrDrawButton(button_start_x, button_start_y, button_start_x + button_width, button_start_y + button_height, c_gray);
 
     draw_set_color(c_black);
     draw_set_halign(fa_center);

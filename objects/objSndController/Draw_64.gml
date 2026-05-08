@@ -20,6 +20,23 @@ for (var i = 0; i < _bands_count; i++) {
 	draw_rectangle(_band.x1, _band.y, _band.x2, _band.y + _band.h, false);
 }
 
+if (surface_exists(application_surface)) {
+	var _src_w = surface_get_width(application_surface);
+	var _vbands_count = array_length(global.glitch_vbands);
+	for (var i = 0; i < _vbands_count; i++) {
+		var _vband = global.glitch_vbands[i];
+		gpu_set_blendmode(_vband.blend);
+		draw_surface_part_ext(
+			application_surface,
+			0, _vband.src_y, _src_w, _vband.src_h,
+			_vband.offset, _vband.src_y,
+			1, 1,
+			c_white, _vband.alpha * _intensity
+		);
+	}
+	gpu_set_blendmode(bm_normal);
+}
+
 draw_set_alpha(0.12);
 draw_set_color(c_black);
 draw_rectangle(0, 0, _gw, _gh, false);

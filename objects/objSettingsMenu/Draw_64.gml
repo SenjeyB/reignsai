@@ -41,8 +41,7 @@ draw_rectangle(slider_sfx_x1, slider_sfx_y1, slider_sfx_x2, slider_sfx_y2, true)
 var _reset_hover = point_in_rectangle(_mx, _my, button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
-draw_set_color(_reset_hover ? make_color_rgb(255, 130, 130) : make_color_rgb(230, 90, 90));
-draw_rectangle(button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2, false);
+scrDrawButton(button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2, _reset_hover ? make_color_rgb(255, 130, 130) : make_color_rgb(230, 90, 90));
 draw_set_color(c_black);
 var _reset_cx = (button_reset_x1 + button_reset_x2) * 0.5;
 var _reset_cy = (button_reset_y1 + button_reset_y2) * 0.5;
@@ -51,8 +50,7 @@ draw_text(_reset_cx, _reset_cy - _reset_line_gap, "Reset Stats + Iterations");
 draw_text(_reset_cx, _reset_cy + _reset_line_gap, "(" + string(reset_taps_left) + " taps left)");
 
 var _back_hover = point_in_rectangle(_mx, _my, button_back_x1, button_back_y1, button_back_x2, button_back_y2);
-draw_set_color(_back_hover ? make_color_rgb(185, 220, 255) : make_color_rgb(145, 185, 225));
-draw_rectangle(button_back_x1, button_back_y1, button_back_x2, button_back_y2, false);
+scrDrawButton(button_back_x1, button_back_y1, button_back_x2, button_back_y2, _back_hover ? make_color_rgb(185, 220, 255) : make_color_rgb(145, 185, 225));
 draw_set_color(c_black);
 draw_text((button_back_x1 + button_back_x2) * 0.5, (button_back_y1 + button_back_y2) * 0.5, "Back");
 
