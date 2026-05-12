@@ -54,16 +54,16 @@ function scrCardsTakeBatch() {
         return [];
     }
 
-    var _current_month = undefined;
+    var _next_month = undefined;
     if (variable_global_exists("start_month_index") && variable_global_exists("turns_timer")) {
-        _current_month = scrCalendarMonthName();
+        _next_month = scrCalendarMonthNameAt(1);
     }
 
     var _pick = -1;
-    if (!is_undefined(_current_month)) {
+    if (!is_undefined(_next_month)) {
         for (var _i = 0; _i < array_length(global.cards_queue); _i++) {
             var _e = global.cards_queue[_i];
-            if (is_struct(_e) && variable_struct_exists(_e, "month") && _e.month == _current_month) {
+            if (is_struct(_e) && variable_struct_exists(_e, "month") && _e.month == _next_month) {
                 _pick = _i;
                 break;
             }
@@ -160,7 +160,7 @@ function scrCardRequest(_count) {
     }
     var _in_war = _in_war_now;
     if (!scrIsEternalWar()) {
-        _in_war = max(0, _in_war_now - _ahead);
+        _in_war = max(0, _in_war_now - (_ahead + 1));
     }
 
     var _statuses = ds_list_create();
@@ -171,7 +171,7 @@ function scrCardRequest(_count) {
     _status_values[? "in_war"] = _in_war;
     ds_map_add_map(_payload, "status_values", _status_values);
 
-    _payload[? "month"] = scrCalendarMonthNameAt(_ahead);
+    _payload[? "month"] = scrCalendarMonthNameAt(_ahead + 1);
 
     var _payload_json = json_encode(_payload);
     ds_map_destroy(_payload);

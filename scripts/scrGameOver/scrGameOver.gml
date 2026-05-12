@@ -13,6 +13,18 @@ function scrGameOver(){
 	}
 	scrKingdomSave(_end_month_idx, _end_turns);
 
+	if (variable_global_exists("cards_queue") && is_array(global.cards_queue)) {
+		var _kept = [];
+		for (var _qi = 0; _qi < array_length(global.cards_queue); _qi++) {
+			var _entry = global.cards_queue[_qi];
+			if (is_struct(_entry) && variable_struct_exists(_entry, "month") && is_undefined(_entry.month)) {
+				array_push(_kept, _entry);
+			}
+		}
+		global.cards_queue = _kept;
+		scrCardsUpdateReadyFlag();
+	}
+
 	var _name_str = "";
 	if (variable_global_exists("player_name") && is_struct(global.player_name)) {
 		_name_str = scrNamesFormat(global.player_name);
