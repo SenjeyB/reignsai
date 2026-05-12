@@ -1,9 +1,9 @@
 var col = c_white;
 
-if (hover) col = make_color_rgb(180, 180, 180);
+if (hover && ability_mode == ACTIVE) col = make_color_rgb(180, 180, 180);
 if (pressed && ability_mode == ACTIVE) col = make_color_rgb(110, 110, 110);
 
-if (available_turn >= global.turns_timer) {
+if (ability_mode == ACTIVE && available_turn >= global.turns_timer) {
 	col = make_color_rgb(90, 90, 90);
 }
 
@@ -20,6 +20,6 @@ if (variable_global_exists("ability_sprite") && is_array(global.ability_sprite))
 if (_icon_spr != -1 && sprite_exists(_icon_spr)) {
 	var _prev_filter = gpu_get_tex_filter();
 	gpu_set_tex_filter(false);
-	draw_sprite_ext(_icon_spr, 0, x, y, 4, 4, 0, col, 1);
+	draw_sprite_ext(_icon_spr, 0, x, y, 5, 5, 0, col, 1);
 	gpu_set_tex_filter(_prev_filter);
 }

@@ -38,20 +38,32 @@ if (_sfx_fill_x > slider_sfx_x1 + 2) {
 draw_set_color(c_white);
 draw_rectangle(slider_sfx_x1, slider_sfx_y1, slider_sfx_x2, slider_sfx_y2, true);
 
-var _reset_hover = point_in_rectangle(_mx, _my, button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
+var _mode_hover = point_in_rectangle(_mx, _my, button_mode_x1, button_mode_y1, button_mode_x2, button_mode_y2);
+scrDrawButton(button_mode_x1, button_mode_y1, button_mode_x2, button_mode_y2, _mode_hover ? make_color_rgb(220, 220, 250) : make_color_rgb(170, 170, 215));
+draw_set_color(c_white);
+var _mode_names = scrDisplayModeNames();
+draw_text((button_mode_x1 + button_mode_x2) * 0.5, (button_mode_y1 + button_mode_y2) * 0.5,
+    "Mode: " + _mode_names[global.display_window_mode]);
+
+var _tutorial_hover = point_in_rectangle(_mx, _my, button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2);
+scrDrawButton(button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2, _tutorial_hover ? make_color_rgb(210, 175, 245) : make_color_rgb(180, 140, 220));
+draw_set_color(c_white);
+draw_text((button_tutorial_x1 + button_tutorial_x2) * 0.5, (button_tutorial_y1 + button_tutorial_y2) * 0.5, "Tutorial");
+
+var _reset_hover = point_in_rectangle(_mx, _my, button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2);
 scrDrawButton(button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2, _reset_hover ? make_color_rgb(255, 130, 130) : make_color_rgb(230, 90, 90));
-draw_set_color(c_black);
+draw_set_color(c_white);
 var _reset_cx = (button_reset_x1 + button_reset_x2) * 0.5;
 var _reset_cy = (button_reset_y1 + button_reset_y2) * 0.5;
-var _reset_line_gap = 22;
+var _reset_line_gap = 12;
 draw_text(_reset_cx, _reset_cy - _reset_line_gap, "Reset Stats + Iterations");
 draw_text(_reset_cx, _reset_cy + _reset_line_gap, "(" + string(reset_taps_left) + " taps left)");
 
 var _back_hover = point_in_rectangle(_mx, _my, button_back_x1, button_back_y1, button_back_x2, button_back_y2);
 scrDrawButton(button_back_x1, button_back_y1, button_back_x2, button_back_y2, _back_hover ? make_color_rgb(185, 220, 255) : make_color_rgb(145, 185, 225));
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_back_x1 + button_back_x2) * 0.5, (button_back_y1 + button_back_y2) * 0.5, "Back");
 
 if (string_length(status_text) > 0) {

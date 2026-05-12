@@ -67,7 +67,7 @@ for (var i = 0; i < n_bars; ++i) {
     draw_text(txt_x, txt_y, txt);
 
     if (bar_change_timer[i] > 0) {
-        var t = bar_change_timer[i] / change_display_time; 
+        var t = bar_change_timer[i] / change_display_time;
         var a = t;
         draw_set_alpha(a);
         var diff = bar_change_amount[i];
@@ -82,6 +82,71 @@ for (var i = 0; i < n_bars; ++i) {
         draw_text(popup_x + 1, popup_y + h/2 + 1, txt_diff);
         draw_set_color(diff >= 0 ? make_color_rgb(120,200,120) : make_color_rgb(200,120,120));
         draw_text(popup_x, popup_y + h/2, txt_diff);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+        draw_set_alpha(1);
+    }
+
+    if (bar_war_timer[i] > 0) {
+        var wt = bar_war_timer[i] / change_display_time;
+        var wa = wt;
+        var wdiff = bar_war_amount[i];
+        var w_sign = wdiff >= 0 ? "+" : "";
+        var w_txt = w_sign + string(wdiff);
+        var w_popup_x = bx + bar_width + 36;
+        var w_popup_y = y_top - 14 - (1 - wt) * 14;
+
+        draw_set_alpha(wa);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_middle);
+        draw_set_color(make_color_rgb(20, 0, 0));
+        draw_text(w_popup_x + 1, w_popup_y + h/2 + 1, w_txt);
+        draw_set_color(make_color_rgb(245, 110, 90));
+        draw_text(w_popup_x, w_popup_y + h/2, w_txt);
+
+        var _w_text_w = string_width(w_txt);
+        var _icon_scale_w = 1.5;
+        var _war_icon_x = w_popup_x + _w_text_w + 10 + (12 * _icon_scale_w);
+        var _war_icon_y = w_popup_y + h/2;
+        var _prev_filter = gpu_get_tex_filter();
+        gpu_set_tex_filter(false);
+        draw_sprite_ext(sprAbilityIntervention, 0, _war_icon_x, _war_icon_y, _icon_scale_w, _icon_scale_w, 0, c_white, wa);
+        gpu_set_tex_filter(_prev_filter);
+
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+        draw_set_alpha(1);
+    }
+
+    if (bar_ability_timer[i] > 0) {
+        var abt = bar_ability_timer[i] / change_display_time;
+        var aba = abt;
+        var abdiff = bar_ability_amount[i];
+        var ab_sign = abdiff >= 0 ? "+" : "";
+        var ab_txt = ab_sign + string(abdiff);
+        var ab_popup_x = bx + bar_width + 36;
+        var ab_popup_y = y_top - (1 - abt) * 14;
+
+        draw_set_alpha(aba);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_middle);
+        draw_set_color(make_color_rgb(0, 20, 30));
+        draw_text(ab_popup_x + 1, ab_popup_y + h/2 + 1, ab_txt);
+        draw_set_color(abdiff >= 0 ? make_color_rgb(120, 230, 255) : make_color_rgb(240, 200, 110));
+        draw_text(ab_popup_x, ab_popup_y + h/2, ab_txt);
+
+        var _ab_text_w = string_width(ab_txt);
+        var _icon_scale_a = 1.5;
+        var _ab_icon_x = ab_popup_x + _ab_text_w + 10 + (12 * _icon_scale_a);
+        var _ab_icon_y = ab_popup_y + h/2;
+        var _ab_spr = bar_ability_sprite[i];
+        if (sprite_exists(_ab_spr)) {
+            var _prev_filter_a = gpu_get_tex_filter();
+            gpu_set_tex_filter(false);
+            draw_sprite_ext(_ab_spr, 0, _ab_icon_x, _ab_icon_y, _icon_scale_a, _icon_scale_a, 0, c_white, aba);
+            gpu_set_tex_filter(_prev_filter_a);
+        }
+
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
         draw_set_alpha(1);
@@ -121,6 +186,35 @@ draw_set_color(make_color_rgb(18, 18, 18));
 draw_text(month_tx + 1, month_ty + 1, month_txt);
 draw_set_color(make_color_rgb(230, 230, 230));
 draw_text(month_tx, month_ty, month_txt);
+
+if (variable_global_exists("status") && global.status[IN_WAR] > 0) {
+    var _gw_local = display_get_gui_width();
+    var _war_icon_size = 32 * 2;
+    var _war_x = _gw_local * 0.5;
+    var _war_y = 56;
+    war_icon_x1 = _war_x - _war_icon_size * 0.5;
+    war_icon_y1 = _war_y - _war_icon_size * 0.5;
+    war_icon_x2 = _war_x + _war_icon_size * 0.5;
+    war_icon_y2 = _war_y + _war_icon_size * 0.5;
+
+    var _prev_filter_w = gpu_get_tex_filter();
+    gpu_set_tex_filter(false);
+    draw_sprite_ext(sprAbilityIntervention, 0, _war_x, _war_y, _war_icon_size / 24, _war_icon_size / 24, 0, c_white, 1);
+    gpu_set_tex_filter(_prev_filter_w);
+
+    var _no_go = !variable_global_exists("game_over") || !global.game_over;
+    if (war_icon_hover && _no_go) {
+        var _war_txt = scrIsEternalWar()
+            ? "Currently at Eternal War."
+            : "Currently in War. " + string(global.status[IN_WAR]) + " months left.";
+        scrDrawBottomBox(_war_txt, fntPS2P_stats);
+    }
+} else {
+    war_icon_x1 = 0;
+    war_icon_y1 = 0;
+    war_icon_x2 = 0;
+    war_icon_y2 = 0;
+}
 
 draw_set_color(c_white);
 draw_set_alpha(1);

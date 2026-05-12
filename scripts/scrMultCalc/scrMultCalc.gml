@@ -51,7 +51,7 @@ function scrMultCalc(_struct_a, _struct_b) {
             _multiplier = 1.0 - (abs(_avg) * _scale_negative);
         }
         
-        _multiplier = clamp(_multiplier, 0.5, 1.75);
+        _multiplier = clamp(_multiplier, 0.75, 1.5);
         
         _multipliers[i] = _multiplier;
     }

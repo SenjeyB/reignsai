@@ -5,21 +5,16 @@ button_gap = 18;
 var _gw = display_get_gui_width();
 var _gh = display_get_gui_height();
 var _center_x = _gw * 0.5;
-var _stack_h = (button_height * 5) + (button_gap * 4);
-var _start_y = (_gh * 0.5) - (_stack_h * 0.5);
+var _stack_h = (button_height * 4) + (button_gap * 3);
+var _start_y = (_gh * 0.7) - (_stack_h * 0.5);
 
 button_start_x1 = _center_x - (button_width * 0.5);
 button_start_y1 = _start_y;
 button_start_x2 = button_start_x1 + button_width;
 button_start_y2 = _start_y + button_height;
 
-button_tutorial_x1 = button_start_x1;
-button_tutorial_y1 = button_start_y2 + button_gap;
-button_tutorial_x2 = button_tutorial_x1 + button_width;
-button_tutorial_y2 = button_tutorial_y1 + button_height;
-
 button_stats_x1 = button_start_x1;
-button_stats_y1 = button_tutorial_y2 + button_gap;
+button_stats_y1 = button_start_y2 + button_gap;
 button_stats_x2 = button_stats_x1 + button_width;
 button_stats_y2 = button_stats_y1 + button_height;
 
@@ -44,6 +39,7 @@ if (!variable_global_exists("menu_reveal_duration")) global.menu_reveal_duration
 
 scrAudioEnsureDefaults();
 if (!instance_exists(objBgScroller)) instance_create_layer(0, 0, "Instances", objBgScroller);
+if (!instance_exists(objMenuCore)) instance_create_layer(0, 0, "Instances", objMenuCore);
 if (!instance_exists(objMusController)) instance_create_layer(0, 0, "Instances", objMusController);
 if (!instance_exists(objSndController)) instance_create_layer(0, 0, "Instances", objSndController);
 if (!instance_exists(objCardRequester)) instance_create_layer(0, 0, "Instances", objCardRequester);
@@ -74,7 +70,6 @@ if (variable_global_exists("parents") && ds_exists(global.parents, ds_type_map) 
     button_start_text = "Start the Module";
     start_is_restart = false;
 }
-button_tutorial_text = "Tutorial";
 button_stats_text = "Statistics";
 button_settings_text = "Settings";
 button_exit_text = "Exit";

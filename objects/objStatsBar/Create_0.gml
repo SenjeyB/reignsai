@@ -27,6 +27,17 @@ bar_target = array_create(n_bars, 0);
 bar_display = array_create(n_bars, 0);
 bar_change_timer = array_create(n_bars, 0);
 bar_change_amount = array_create(n_bars, 0);
+bar_war_timer = array_create(n_bars, 0);
+bar_war_amount = array_create(n_bars, 0);
+bar_ability_timer = array_create(n_bars, 0);
+bar_ability_amount = array_create(n_bars, 0);
+bar_ability_sprite = array_create(n_bars, -1);
+
+war_icon_x1 = 0;
+war_icon_y1 = 0;
+war_icon_x2 = 0;
+war_icon_y2 = 0;
+war_icon_hover = false;
 
 for (var i = 0; i < n_bars; ++i) {
     var k = bar_keys[i];

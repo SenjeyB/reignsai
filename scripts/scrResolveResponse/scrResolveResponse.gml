@@ -124,7 +124,8 @@ function scrResolveResponse(){
 	    exit;
 	}
 
-	scrCardsPushBatch(_cards);
+	var _batch_month = scrParseBatchMonthFromJsonText(json_text);
+	scrCardsPushBatch(_cards, _batch_month);
 	scrApiClearError();
 
 	if (global.waiting_req == req_key) {

@@ -13,8 +13,8 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
 
     var origin_y = sprite_get_yoffset(_base);
     var box_w = w * 0.86;
-    var box_x = (w - box_w) / 2;
-    var box_y = origin_y + 30;
+    var box_x = (w - box_w) / 2 + 24;
+    var box_y = origin_y - 30;
     var box_bottom = h * 0.96;
     var box_h = max(40, box_bottom - box_y);
 
@@ -23,11 +23,12 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
     var inner_w = box_w - pad_x * 2;
     var inner_h = box_h - pad_y * 2;
 
+    var origin_x = sprite_get_xoffset(_base);
     var surf = surface_create(w, h);
     surface_set_target(surf);
     draw_clear_alpha(c_black, 0);
-    draw_sprite(_base, 0, w / 2, h / 2);
-    draw_sprite(sprChar, sprCharIndex, w / 2, h / 3 + 30);
+    draw_sprite(_base, 0, origin_x, origin_y);
+    draw_sprite(sprChar, sprCharIndex, w / 2, h / 3 - 10);
 
     var words = ds_list_create();
     var pos = 1, len = string_length(t_full);
@@ -48,14 +49,15 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
     if (max_scale > 12) max_scale = 12;
     max_scale = max(1, max_scale - 1);
 
-    var best_scale = -1;
-    var low = 1;
-    var high = max_scale;
+    var _candidates = [];
+    for (var _ci = max_scale; _ci >= 1; _ci--) array_push(_candidates, _ci);
+    array_push(_candidates, 0.9, 0.8, 0.7, 0.6, 0.5);
 
-    while (low <= high) {
-        var mid = floor((low + high) * 0.5);
-        var scaled_h = base_h * mid;
-        var scaled_gap = max(1, round(scaled_h * 0.25));
+    var best_scale = -1;
+    for (var _ci2 = 0; _ci2 < array_length(_candidates); _ci2++) {
+        var s = _candidates[_ci2];
+        var scaled_h = base_h * s;
+        var scaled_gap = max(1, scaled_h * 0.25);
 
         var too_large = false;
         var lines_needed = 0;
@@ -64,10 +66,10 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
 
         for (var i = 0; i < wc; i++) {
             var wword = words[| i];
-            var ww = string_width(wword) * mid;
+            var ww = string_width(wword) * s;
             if (ww > inner_w) { too_large = true; break; }
             var cand = (cur == "") ? wword : cur + " " + wword;
-            if (string_width(cand) * mid <= inner_w) {
+            if (string_width(cand) * s <= inner_w) {
                 cur = cand;
             } else {
                 lines_needed++;
@@ -77,17 +79,13 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
         if (!too_large && cur != "") lines_needed++;
 
         var required_h = lines_needed * scaled_h + max(0, lines_needed - 1) * scaled_gap;
-        var fits = (!too_large) && (required_h <= inner_h);
-
-        if (fits) {
-            best_scale = mid;
-            low = mid + 1;
-        } else {
-            high = mid - 1;
+        if (!too_large && required_h <= inner_h) {
+            best_scale = s;
+            break;
         }
     }
 
-    if (best_scale == -1) best_scale = 1;
+    if (best_scale == -1) best_scale = 0.5;
 
     var line_h = base_h * best_scale;
     var line_gap = max(1, round(line_h * 0.25));
@@ -114,7 +112,7 @@ function scrCreateComposedSprite(_base, _text_list, _base_font)
     var total_h = n_lines * line_h + max(0, n_lines - 1) * line_gap;
 
     var prev_filter = gpu_get_tex_filter();
-    gpu_set_tex_filter(false);
+    gpu_set_tex_filter(best_scale < 1);
 
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);

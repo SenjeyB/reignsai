@@ -55,13 +55,14 @@ function scrDrawBottomBox(_text, _base_font)
 	var max_scale = max(1, floor(inner_h / base_h));
 	if (max_scale > 2) max_scale = 2;
 
-	var best_scale = -1;
-	var low = 1;
-	var high = max_scale;
+	var _candidates = [];
+	for (var _ci = max_scale; _ci >= 1; _ci--) array_push(_candidates, _ci);
+	array_push(_candidates, 0.9, 0.8, 0.7, 0.6, 0.5);
 
-	while (low <= high) {
-	    var mid = floor((low + high) * 0.5);
-	    var scaled_h = base_h * mid;
+	var best_scale = -1;
+	for (var _ci2 = 0; _ci2 < array_length(_candidates); _ci2++) {
+	    var s = _candidates[_ci2];
+	    var scaled_h = base_h * s;
 
 	    var too_large = false;
 	    var lines_needed = 0;
@@ -75,21 +76,21 @@ function scrDrawBottomBox(_text, _base_font)
 	            cur = "";
 	            continue;
 	        }
-	        var ww = string_width(wword) * mid;
+	        var ww = string_width(wword) * s;
 	        if (ww > inner_w) { too_large = true; break; }
 	        var cand = (cur == "") ? wword : cur + " " + wword;
-	        if (string_width(cand) * mid <= inner_w) cur = cand;
+	        if (string_width(cand) * s <= inner_w) cur = cand;
 	        else { lines_needed++; cur = wword; }
 	    }
 	    if (!too_large && cur != "") lines_needed++;
 
-	    var fits = (!too_large) && (lines_needed * scaled_h <= inner_h);
-
-	    if (fits) { best_scale = mid; low = mid + 1; }
-	    else { high = mid - 1; }
+	    if (!too_large && lines_needed * scaled_h <= inner_h) {
+	        best_scale = s;
+	        break;
+	    }
 	}
 
-	if (best_scale == -1) best_scale = 1;
+	if (best_scale == -1) best_scale = 0.5;
 
 	var line_h = base_h * best_scale;
 
@@ -119,10 +120,10 @@ function scrDrawBottomBox(_text, _base_font)
 	var start_y = box_y + pad_top + (inner_h - total_h) * 0.5;
 	start_y = clamp(start_y, box_y + pad_top, box_y + box_h - pad_bottom - total_h);
 
-	draw_sprite_stretched(sprSplash, 0, box_x, box_y, box_w, box_h);
+	draw_sprite_stretched_ext(sprSplash, 0, box_x, box_y, box_w, box_h, c_white, 0.75);
 
 	var prev_filter = gpu_get_tex_filter();
-	gpu_set_tex_filter(false);
+	gpu_set_tex_filter(best_scale < 1);
 
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);

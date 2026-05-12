@@ -110,6 +110,19 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 		}
 	}
 
+	global.glitch_title_timer -= 1;
+	if (global.glitch_title_timer <= 0) {
+		global.glitch_title_timer = irandom_range(3, 8);
+		var _palette = "MODULE WATCHER!@#$%^&*+-=<>?/\\|~";
+		var _len = irandom_range(8, 18);
+		var _glitch_str = "";
+		for (var _gi = 0; _gi < _len; _gi++) {
+			var _ci = irandom(string_length(_palette) - 1) + 1;
+			_glitch_str += string_char_at(_palette, _ci);
+		}
+		window_set_caption(_glitch_str);
+	}
+
 	var _sound_playing = false;
 	if (global.glitch_transition_instance != -1) {
 		_sound_playing = audio_is_playing(global.glitch_transition_instance);
@@ -136,10 +149,11 @@ if (variable_global_exists("glitch_transition_active") && global.glitch_transiti
 		global.glitch_vbands = [];
 		global.glitch_vband_spawn_timer = 0;
 		global.glitch_vband_next_spawn = max(1, ceil(_fps * 0.2));
+		global.glitch_title_timer = 0;
+		window_set_caption("Module Watcher");
 		if (_target_room != -1) {
 			if (_target_room == rmMainMenu) {
 				global.cards_refresh_on_mainmenu = true;
-				global.cards_reseed_after_restart = true;
 				global.menu_reveal_active = true;
 				global.menu_reveal_timer = 0;
 				global.menu_reveal_duration = max(1, ceil(_fps * 0.5));

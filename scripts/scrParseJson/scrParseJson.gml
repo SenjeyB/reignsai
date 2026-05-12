@@ -35,19 +35,31 @@ function scrParseCardsFromJsonText(_content) {
         rec.desc_opt2 = _struct_get_safe(opt2, "description", "");
 
         rec.stats_opt1 = [];
-        rec.stats_opt1[ARMY_POWER] = _struct_get_safe(opt1, "army", 0);
-        rec.stats_opt1[SUPPORT]    = _struct_get_safe(opt1, "support", 0);
-        rec.stats_opt1[RESOURCES]  = _struct_get_safe(opt1, "resources", 0);
-        rec.stats_opt1[SCIENCE]    = _struct_get_safe(opt1, "science", 0);
+        var _cap = 20;
+        rec.stats_opt1[ARMY_POWER] = clamp(real(_struct_get_safe(opt1, "army", 0)),      -_cap, _cap);
+        rec.stats_opt1[SUPPORT]    = clamp(real(_struct_get_safe(opt1, "support", 0)),   -_cap, _cap);
+        rec.stats_opt1[RESOURCES]  = clamp(real(_struct_get_safe(opt1, "resources", 0)), -_cap, _cap);
+        rec.stats_opt1[SCIENCE]    = clamp(real(_struct_get_safe(opt1, "science", 0)),   -_cap, _cap);
 
         rec.stats_opt2 = [];
-        rec.stats_opt2[ARMY_POWER] = _struct_get_safe(opt2, "army", 0);
-        rec.stats_opt2[SUPPORT]    = _struct_get_safe(opt2, "support", 0);
-        rec.stats_opt2[RESOURCES]  = _struct_get_safe(opt2, "resources", 0);
-        rec.stats_opt2[SCIENCE]    = _struct_get_safe(opt2, "science", 0);
+        rec.stats_opt2[ARMY_POWER] = clamp(real(_struct_get_safe(opt2, "army", 0)),      -_cap, _cap);
+        rec.stats_opt2[SUPPORT]    = clamp(real(_struct_get_safe(opt2, "support", 0)),   -_cap, _cap);
+        rec.stats_opt2[RESOURCES]  = clamp(real(_struct_get_safe(opt2, "resources", 0)), -_cap, _cap);
+        rec.stats_opt2[SCIENCE]    = clamp(real(_struct_get_safe(opt2, "science", 0)),   -_cap, _cap);
 
         result[i] = rec;
     }
 
     return result;
+}
+
+function scrParseBatchMonthFromJsonText(_content) {
+    var root = json_parse(_content);
+    if (!is_struct(root) || !variable_struct_exists(root, "data")) return undefined;
+    var data_block = root.data;
+    if (!is_struct(data_block)) return undefined;
+    if (!variable_struct_exists(data_block, "month")) return undefined;
+    var _m = data_block.month;
+    if (!is_string(_m) || string_length(_m) <= 0) return undefined;
+    return _m;
 }

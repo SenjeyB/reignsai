@@ -40,11 +40,20 @@ if (is_vaporizing) {
     exit;
 }
 
-var grab_left  = left  - (card_w * (grab_zone_mul - 1) * 0.5);
-var grab_right = right + (card_w * (grab_zone_mul - 1) * 0.5);
+var grab_band_top    = y - card_h * 0.40;
+var grab_band_bottom = y + card_h * 0.20;
+var grab_card_top    = y - card_h * 0.50;
+var grab_card_bottom = y + card_h * 0.40;
+
+var in_grab_zone = false;
+if (mx >= left && mx <= right) {
+    in_grab_zone = (my >= grab_card_top && my <= grab_card_bottom);
+} else {
+    in_grab_zone = (my >= grab_band_top && my <= grab_band_bottom);
+}
 
 if (mouse_check_button_pressed(mb_left)) {
-    if (mx > grab_left && mx < grab_right && my > top && my < bottom) {
+    if (in_grab_zone) {
         grabbed = true;
     }
 }
@@ -59,8 +68,8 @@ if (grabbed) {
     x = lerp(x, mx, grab_move_smooth);
     y = lerp(y, my, grab_move_smooth);
 	
-    var dw = display_get_width();
-    var dh = display_get_height();
+    var dw = room_width;
+    var dh = room_height;
 
     var nx = clamp((mx - dw/2) / (dw/2), -1, 1);
     var ny = clamp((my - dh/2) / (dh/2), -1, 1);
@@ -77,13 +86,13 @@ if (grabbed) {
     angle_target = 0;
     offset_target = 0;
 
-    if (mx > (x - card_w/2) - corner_extend && mx < (x - card_w/2) + corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
+    if (mx >= 0 && mx < (x - card_w/2) + corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
         angle_target = tilt_angle;
         offset_target = -tilt_offset;
 		position = 1;
     }
 
-    if (mx < (x + card_w/2) + corner_extend && mx > (x + card_w/2) - corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
+    if (mx <= room_width && mx > (x + card_w/2) - corner_w && my > (y - card_h/2 + top_inset) && my < (y - card_h/2) + corner_h + corner_extend) {
         angle_target = -tilt_angle;
         offset_target = tilt_offset;
 		position = 2;

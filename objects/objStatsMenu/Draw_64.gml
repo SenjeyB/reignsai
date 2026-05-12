@@ -47,5 +47,5 @@ var _back_hover = point_in_rectangle(_mx, _my, button_back_x1, button_back_y1, b
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 scrDrawButton(button_back_x1, button_back_y1, button_back_x2, button_back_y2, _back_hover ? make_color_rgb(185, 220, 255) : make_color_rgb(145, 185, 225));
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_back_x1 + button_back_x2) * 0.5, (button_back_y1 + button_back_y2) * 0.5, "Back");

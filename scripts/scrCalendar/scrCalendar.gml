@@ -25,6 +25,21 @@ function scrCalendarMonthName() {
     return _names[scrCalendarMonthIndex()];
 }
 
+function scrCalendarMonthIndexAt(_offset) {
+    scrCalendarEnsureStart();
+    var _turns = 0;
+    if (variable_global_exists("turns_timer")) _turns = real(global.turns_timer);
+    return (((global.start_month_index + _turns + _offset) mod 12) + 12) mod 12;
+}
+
+function scrCalendarMonthNameAt(_offset) {
+    var _names = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    return _names[scrCalendarMonthIndexAt(_offset)];
+}
+
 function scrCalendarMonthColor() {
     var _colors = [
         make_color_rgb(110, 140, 165),

@@ -9,27 +9,22 @@ draw_text(display_get_gui_width() * 0.5, display_get_gui_height() * 0.16, title_
 
 var _start_hover = point_in_rectangle(_mx, _my, button_start_x1, button_start_y1, button_start_x2, button_start_y2);
 scrDrawButton(button_start_x1, button_start_y1, button_start_x2, button_start_y2, _start_hover ? make_color_rgb(180, 255, 180) : make_color_rgb(130, 245, 130));
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_start_x1 + button_start_x2) * 0.5, (button_start_y1 + button_start_y2) * 0.5, button_start_text);
-
-var _tutorial_hover = point_in_rectangle(_mx, _my, button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2);
-scrDrawButton(button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2, _tutorial_hover ? make_color_rgb(210, 175, 245) : make_color_rgb(180, 140, 220));
-draw_set_color(c_black);
-draw_text((button_tutorial_x1 + button_tutorial_x2) * 0.5, (button_tutorial_y1 + button_tutorial_y2) * 0.5, button_tutorial_text);
 
 var _stats_hover = point_in_rectangle(_mx, _my, button_stats_x1, button_stats_y1, button_stats_x2, button_stats_y2);
 scrDrawButton(button_stats_x1, button_stats_y1, button_stats_x2, button_stats_y2, _stats_hover ? make_color_rgb(130, 210, 255) : make_color_rgb(90, 185, 240));
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_stats_x1 + button_stats_x2) * 0.5, (button_stats_y1 + button_stats_y2) * 0.5, button_stats_text);
 
 var _settings_hover = point_in_rectangle(_mx, _my, button_settings_x1, button_settings_y1, button_settings_x2, button_settings_y2);
 scrDrawButton(button_settings_x1, button_settings_y1, button_settings_x2, button_settings_y2, _settings_hover ? make_color_rgb(235, 235, 235) : make_color_rgb(190, 190, 190));
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_settings_x1 + button_settings_x2) * 0.5, (button_settings_y1 + button_settings_y2) * 0.5, button_settings_text);
 
 var _exit_hover = point_in_rectangle(_mx, _my, button_exit_x1, button_exit_y1, button_exit_x2, button_exit_y2);
 scrDrawButton(button_exit_x1, button_exit_y1, button_exit_x2, button_exit_y2, _exit_hover ? c_orange : c_red);
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_text((button_exit_x1 + button_exit_x2) * 0.5, (button_exit_y1 + button_exit_y2) * 0.5, button_exit_text);
 
 if (variable_global_exists("api_last_error") && string_length(global.api_last_error) > 0) {

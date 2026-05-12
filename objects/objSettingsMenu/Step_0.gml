@@ -40,6 +40,20 @@ if (!mouse_check_button_released(mb_left)) exit;
 drag_music_slider = false;
 drag_sfx_slider = false;
 
+if (point_in_rectangle(_mx, _my, button_mode_x1, button_mode_y1, button_mode_x2, button_mode_y2)) {
+    scrAudioPlayButton();
+    global.display_window_mode = (global.display_window_mode + 1) mod 3;
+    scrDisplayApplyMode();
+    scrAudioSaveSettings();
+    exit;
+}
+
+if (point_in_rectangle(_mx, _my, button_tutorial_x1, button_tutorial_y1, button_tutorial_x2, button_tutorial_y2)) {
+    scrAudioPlayButton();
+    room_goto(rmTutorialMenu);
+    exit;
+}
+
 if (point_in_rectangle(_mx, _my, button_reset_x1, button_reset_y1, button_reset_x2, button_reset_y2)) {
     scrAudioPlayButton();
     reset_taps_left -= 1;

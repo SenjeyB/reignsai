@@ -4,7 +4,7 @@ function scrCreateCard(_card_base) {
 	sprBaseRect = sprCardBase;
 
 	var final_sprite = scrCreateComposedSprite(sprBaseRect, _card_base.situation, fntPS2P_stats);
-	with instance_create_layer(display_get_width()/2, display_get_height()/2, "Instances", objBaseCard) {
+	with instance_create_layer(room_width / 2, room_height / 2, "Instances", objBaseCard) {
 	    sprite_index = final_sprite;
 		stat = [];
 		stat[0, ARMY_POWER] = _card_base.stats_opt1[ARMY_POWER];

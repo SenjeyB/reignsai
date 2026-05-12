@@ -1,3 +1,9 @@
+if (variable_global_exists("game_over") && global.game_over) {
+	hover = false;
+	pressed = false;
+	exit;
+}
+
 hover = point_in_rectangle(
     mouse_x, mouse_y,
     bbox_left, bbox_top,

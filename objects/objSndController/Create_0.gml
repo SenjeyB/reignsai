@@ -2,6 +2,11 @@ scrAudioEnsureDefaults();
 ambient_timer = max(1, game_get_speed(gamespeed_fps)) * 60;
 visible = true;
 
+window_set_caption("Module Watcher");
+display_set_gui_size(1366, 768);
+scrDisplayApplyMode();
+if (!variable_global_exists("glitch_title_timer")) global.glitch_title_timer = 0;
+
 if (!variable_global_exists("glitch_transition_active")) global.glitch_transition_active = false;
 if (!variable_global_exists("glitch_transition_timer")) global.glitch_transition_timer = 0;
 if (!variable_global_exists("glitch_transition_duration")) global.glitch_transition_duration = 0;

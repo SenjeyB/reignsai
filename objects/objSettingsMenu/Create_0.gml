@@ -1,4 +1,5 @@
 scrAudioEnsureDefaults();
+scrDisplayEnsureDefaults();
 if (!instance_exists(objBgScroller)) instance_create_layer(0, 0, "Instances", objBgScroller);
 
 title_text = "SETTINGS";
@@ -32,16 +33,30 @@ sfx_preview_step = 0.05;
 reset_taps_timer = 0;
 reset_taps_timeout = max(1, ceil(game_get_speed(gamespeed_fps) * 2));
 
+button_mode_w = 520;
+button_mode_h = 60;
+button_mode_x1 = _center_x - (button_mode_w * 0.5);
+button_mode_y1 = slider_sfx_y2 + 40;
+button_mode_x2 = button_mode_x1 + button_mode_w;
+button_mode_y2 = button_mode_y1 + button_mode_h;
+
+button_tutorial_w = 520;
+button_tutorial_h = 60;
+button_tutorial_x1 = _center_x - (button_tutorial_w * 0.5);
+button_tutorial_y1 = button_mode_y2 + 14;
+button_tutorial_x2 = button_tutorial_x1 + button_tutorial_w;
+button_tutorial_y2 = button_tutorial_y1 + button_tutorial_h;
+
 button_reset_w = 520;
-button_reset_h = 92;
+button_reset_h = 78;
 button_reset_x1 = _center_x - (button_reset_w * 0.5);
-button_reset_y1 = slider_sfx_y2 + 80;
+button_reset_y1 = button_tutorial_y2 + 28;
 button_reset_x2 = button_reset_x1 + button_reset_w;
 button_reset_y2 = button_reset_y1 + button_reset_h;
 
-button_back_w = 260;
+button_back_w = 354;
 button_back_h = 56;
 button_back_x1 = _center_x - (button_back_w * 0.5);
-button_back_y1 = button_reset_y2 + 36;
+button_back_y1 = button_reset_y2 + 22;
 button_back_x2 = button_back_x1 + button_back_w;
 button_back_y2 = button_back_y1 + button_back_h;

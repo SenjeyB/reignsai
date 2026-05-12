@@ -19,6 +19,9 @@ function scrAudioLoadSettings() {
 		if (variable_struct_exists(parsed, "audio_sfx_volume")) {
 			global.audio_sfx_volume = clamp(real(parsed.audio_sfx_volume), 0, 1);
 		}
+		if (variable_struct_exists(parsed, "display_window_mode")) {
+			global.display_window_mode = real(parsed.display_window_mode);
+		}
 	} catch (_e) {
 		show_debug_message("scrAudioLoadSettings: failed to parse settings.json");
 	}
@@ -27,7 +30,8 @@ function scrAudioLoadSettings() {
 function scrAudioSaveSettings() {
 	var data = {
 		audio_music_volume: global.audio_music_volume,
-		audio_sfx_volume: global.audio_sfx_volume
+		audio_sfx_volume: global.audio_sfx_volume,
+		display_window_mode: variable_global_exists("display_window_mode") ? global.display_window_mode : 0
 	};
 	var content = json_stringify(data);
 	var f = file_text_open_write("settings.json");

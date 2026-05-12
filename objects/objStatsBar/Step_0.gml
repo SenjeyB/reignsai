@@ -20,4 +20,14 @@ for (var i = 0; i < n_bars; ++i) {
     if (bar_change_timer[i] > 0) {
         bar_change_timer[i] -= 1;
     }
+    if (bar_war_timer[i] > 0) {
+        bar_war_timer[i] -= 1;
+    }
+    if (bar_ability_timer[i] > 0) {
+        bar_ability_timer[i] -= 1;
+    }
 }
+
+var _mx = device_mouse_x_to_gui(0);
+var _my = device_mouse_y_to_gui(0);
+war_icon_hover = point_in_rectangle(_mx, _my, war_icon_x1, war_icon_y1, war_icon_x2, war_icon_y2);

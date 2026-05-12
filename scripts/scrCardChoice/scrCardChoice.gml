@@ -15,6 +15,8 @@ function scrCardChoice(_choice) {
 	if (is_game_over) {
 		exit;
 	}
+	scrWarTick();
+	if (variable_global_exists("game_over") && global.game_over) exit;
 	global.can_create = true;
     instance_destroy();
 }

@@ -5,6 +5,14 @@ function scrGameOver(){
 	scrRunStatsRecordRun();
 	scrSaveParent();
 
+	var _end_month_idx = 0;
+	var _end_turns = 0;
+	if (variable_global_exists("start_month_index") && variable_global_exists("turns_timer")) {
+		_end_turns = real(global.turns_timer);
+		_end_month_idx = ((real(global.start_month_index) + _end_turns) mod 12 + 12) mod 12;
+	}
+	scrKingdomSave(_end_month_idx, _end_turns);
+
 	var _name_str = "";
 	if (variable_global_exists("player_name") && is_struct(global.player_name)) {
 		_name_str = scrNamesFormat(global.player_name);

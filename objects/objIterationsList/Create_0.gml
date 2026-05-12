@@ -1,15 +1,5 @@
-menu_x = 50;
-menu_y = 50;
-menu_width = 300;
-menu_height = 500;
-item_height = 40;
-padding = 10;
-
 selected_items = [];
-button_start_x = menu_x;
-button_start_y = menu_y + menu_height + 20;
-button_width = 300;
-button_height = 50;
+
 button_text = "Start";
 button_text_waiting = "Loading";
 
@@ -29,12 +19,54 @@ array_sort(items_array, function(_a, _b) {
     var _val_b = 0;
     if (variable_struct_exists(_a, "iteration")) _val_a = _a.iteration;
     if (variable_struct_exists(_b, "iteration")) _val_b = _b.iteration;
-    return _val_a - _val_b;
+    return _val_b - _val_a;
 });
 
-var _total_count = array_length(items_array);
-if (_total_count > 10) {
-    var _trimmed_array = [];
-    array_copy(_trimmed_array, 0, items_array, _total_count - 10, 10);
-    items_array = _trimmed_array;
+if (array_length(items_array) > 10) {
+    array_resize(items_array, 10);
 }
+
+var _gw = display_get_gui_width();
+var _gh = display_get_gui_height();
+
+arc_center_x = -550;
+arc_center_y = _gh * 0.5;
+arc_radius = 850;
+arc_angle_step = 5;
+arc_focus_index = 0;
+arc_focus_target = 0;
+arc_smooth = 0.18;
+arc_visible_half = 3;
+arc_max_angle = arc_visible_half * arc_angle_step;
+namebox_scale_focused = 2.0;
+namebox_scale_min = 0.85;
+
+scheme_x = _gw * 0.72;
+scheme_y = _gh * 0.45;
+scheme_scale = 2.8;
+slot_right_off  = [-68, -30];
+slot_left_off   = [ 71, -28];
+slot_child_off  = [  1,  30];
+icon_scale = 5;
+icon_native_size = 24;
+
+hover_parent_index = -1;
+hover_child = false;
+hover_arc_index = -1;
+
+button_w = 354;
+button_h = 60;
+button_gap = 20;
+var _btn_total_w = button_w * 2 + button_gap;
+var _btn_left_x = (_gw - _btn_total_w) * 0.5;
+var _btn_y = _gh - button_h - 46;
+
+button_back_x1 = _btn_left_x;
+button_back_y1 = _btn_y;
+button_back_x2 = button_back_x1 + button_w;
+button_back_y2 = button_back_y1 + button_h;
+
+button_start_x1 = button_back_x2 + button_gap;
+button_start_y1 = _btn_y;
+button_start_x2 = button_start_x1 + button_w;
+button_start_y2 = button_start_y1 + button_h;

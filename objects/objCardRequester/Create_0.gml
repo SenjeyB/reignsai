@@ -20,6 +20,6 @@ if (!variable_global_exists("api_session_init_pending")) global.api_session_init
 if (!variable_global_exists("api_session_init_req")) global.api_session_init_req = "";
 if (!variable_global_exists("api_session_init_attempted")) global.api_session_init_attempted = false;
 if (!variable_global_exists("cards_queue")) global.cards_queue = [];
-if (!variable_global_exists("cards_queue_limit")) global.cards_queue_limit = 5;
+if (!variable_global_exists("cards_queue_limit")) global.cards_queue_limit = 1;
 if (!variable_global_exists("cards_prefetch_enabled")) global.cards_prefetch_enabled = false;
 if (!variable_global_exists("cards_reseed_after_restart")) global.cards_reseed_after_restart = false;

@@ -1,68 +1,51 @@
 function scrUseAbility(_ability_id) {
-	// Army abilities
-	// Passive
 	if (_ability_id == ETERNAL_WAR) {
-		scrChangeStat(ARMY_POWER, 5);
-		scrChangeStat(SUPPORT, -3);
-		scrChangeStat(RESOURCES, -3);
 		global.status[IN_WAR] = 1;
 	}
-	
-	// Active
+
 	if (_ability_id == INTERVENTION) {
-		scrChangeStat(ARMY_POWER, -15);
-		scrChangeStat(SUPPORT, -15);
-		scrChangeStat(RESOURCES, 30);
+		scrApplyAbilityStatChange(ARMY_POWER, -15, _ability_id);
+		scrApplyAbilityStatChange(SUPPORT, -15, _ability_id);
+		scrApplyAbilityStatChange(RESOURCES, 30, _ability_id);
 		global.status[IN_WAR] = global.ability_cooldown[INTERVENTION] - 1;
 		available_turn = global.turns_timer + global.ability_cooldown[INTERVENTION];
 	}
-	
-	// Support abilities
-	// Passive
+
 	if (_ability_id == UNEMOTIONAL_COMMUNITY) {
 		global.unemotional_commumity = true;
 	}
-	
-	// Active
+
 	if (_ability_id == PUBLIC_SPEECH) {
-		scrChangeStat(SUPPORT, 15);
+		scrApplyAbilityStatChange(SUPPORT, 15, _ability_id);
 		available_turn = global.turns_timer + global.ability_cooldown[PUBLIC_SPEECH];
 	}
-	
-	// Science abilities
-	// Active
+
 	if (_ability_id == MANHATTAN_PROJECT) {
-		scrChangeStat(ARMY_POWER, 10);
-		scrChangeStat(SUPPORT, 10);
-		scrChangeStat(SCIENCE, 10);
-		scrChangeStat(RESOURCES, -25);
+		scrApplyAbilityStatChange(ARMY_POWER, 10, _ability_id);
+		scrApplyAbilityStatChange(SUPPORT, 10, _ability_id);
+		scrApplyAbilityStatChange(SCIENCE, 10, _ability_id);
+		scrApplyAbilityStatChange(RESOURCES, -25, _ability_id);
 		available_turn = global.turns_timer + global.ability_cooldown[MANHATTAN_PROJECT];
 	}
-	
-	// Passive
+
 	if (_ability_id == SCIENTIFIC_AMBITIONS) {
-		scrChangeStat(SCIENCE, 5);
+		scrApplyAbilityStatChange(SCIENCE, 5, _ability_id);
 		var i = irandom(2);
-		if (i == 0) scrChangeStat(RESOURCES, 5);
-		else scrChangeStat(RESOURCES, -5);
+		if (i == 0) scrApplyAbilityStatChange(RESOURCES, 5, _ability_id);
+		else scrApplyAbilityStatChange(RESOURCES, -5, _ability_id);
 	}
-	
-	// Resources abilities
-	// Active
+
 	if (_ability_id == PAY_TAXES) {
-		scrChangeStat(SUPPORT, -3 * global.payed_taxes++);
-		scrChangeStat(RESOURCES, 15);
+		scrApplyAbilityStatChange(SUPPORT, -3 * global.payed_taxes++, _ability_id);
+		scrApplyAbilityStatChange(RESOURCES, 15, _ability_id);
 		available_turn = global.turns_timer + global.ability_cooldown[PAY_TAXES];
 	}
-	
-	// Active
+
 	if (_ability_id == BRIBERY) {
-		scrChangeStat(SUPPORT, -10);
+		scrApplyAbilityStatChange(SUPPORT, -10, _ability_id);
 		var i = irandom(2);
-		if (i == 0) scrChangeStat(RESOURCES, 20);
-		else scrChangeStat(RESOURCES, -10);
+		if (i == 0) scrApplyAbilityStatChange(RESOURCES, 20, _ability_id);
+		else scrApplyAbilityStatChange(RESOURCES, -10, _ability_id);
 		available_turn = global.turns_timer + global.ability_cooldown[BRIBERY];
 	}
-	
 }
-

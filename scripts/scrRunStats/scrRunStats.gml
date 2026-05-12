@@ -177,6 +177,7 @@ function scrRunStatsReset() {
     if (file_exists("parents.json")) {
         file_delete("parents.json");
     }
+    scrKingdomClear();
 
     if (variable_global_exists("parents") && ds_exists(global.parents, ds_type_map)) {
         ds_map_destroy(global.parents);
