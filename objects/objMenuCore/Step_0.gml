@@ -35,7 +35,7 @@ if (_has_runs) {
     if (spark_spawn_timer >= _spark_interval) {
         spark_spawn_timer = 0;
         var _cx = display_get_gui_width() * 0.5;
-        var _cy = display_get_gui_height() * 0.32;
+        var _cy = display_get_gui_height() * 0.42;
         var _ang = random(360);
         var _dist = 60 + random(50);
         var _sp = 0.4 + random(0.6);

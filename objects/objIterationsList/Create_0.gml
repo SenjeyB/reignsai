@@ -44,9 +44,9 @@ namebox_scale_min = 0.85;
 scheme_x = _gw * 0.72;
 scheme_y = _gh * 0.45;
 scheme_scale = 2.8;
-slot_right_off  = [-68, -30];
-slot_left_off   = [ 71, -28];
-slot_child_off  = [  1,  30];
+slot_right_off  = [-68, -26];
+slot_left_off   = [ 71, -26];
+slot_child_off  = [  1,  33];
 icon_scale = 5;
 icon_native_size = 24;
 

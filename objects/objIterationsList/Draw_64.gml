@@ -107,6 +107,12 @@ if (array_length(selected_items) >= 1) {
         gpu_set_tex_filter(_prev_filter);
     }
 }
+if (array_length(selected_items) == 1 && sprite_exists(_spr1)) {
+    var _prev_filter_c = gpu_get_tex_filter();
+    gpu_set_tex_filter(false);
+    draw_sprite_ext(_spr1, 0, _slot_child_x, _slot_child_y, icon_scale, icon_scale, 0, c_white, 1);
+    gpu_set_tex_filter(_prev_filter_c);
+}
 if (array_length(selected_items) >= 2) {
     var _p2 = selected_items[1];
     if (variable_struct_exists(_p2, "ability_id") && _p2.ability_id >= 0 && _p2.ability_id < array_length(global.ability_sprite)) {

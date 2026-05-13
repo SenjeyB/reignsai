@@ -5,7 +5,17 @@ draw_set_font(fntPS2P_stats);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_color(c_white);
-draw_text(display_get_gui_width() * 0.5, display_get_gui_height() * 0.16, title_text);
+
+var _logo_x = display_get_gui_width() * 0.5;
+var _logo_y = display_get_gui_height() * 0.18;
+var _logo_bob_x = sin(current_time / 1100) * 10;
+var _logo_bob_y = sin(current_time / 700) * 8;
+var _logo_rot = sin(current_time / 1400) * 4;
+var _logo_scale = 4.0;
+var _prev_filter_logo = gpu_get_tex_filter();
+gpu_set_tex_filter(false);
+draw_sprite_ext(sprLogo, 0, _logo_x + _logo_bob_x, _logo_y + _logo_bob_y, _logo_scale, _logo_scale, _logo_rot, c_white, 1);
+gpu_set_tex_filter(_prev_filter_logo);
 
 var _start_hover = point_in_rectangle(_mx, _my, button_start_x1, button_start_y1, button_start_x2, button_start_y2);
 scrDrawButton(button_start_x1, button_start_y1, button_start_x2, button_start_y2, _start_hover ? make_color_rgb(180, 255, 180) : make_color_rgb(130, 245, 130));

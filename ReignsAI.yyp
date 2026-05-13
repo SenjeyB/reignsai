@@ -137,6 +137,7 @@
     {"id":{"name":"sprCharBase","path":"sprites/sprCharBase/sprCharBase.yy",},},
     {"id":{"name":"sprCore","path":"sprites/sprCore/sprCore.yy",},},
     {"id":{"name":"sprInk","path":"sprites/sprInk/sprInk.yy",},},
+    {"id":{"name":"sprLogo","path":"sprites/sprLogo/sprLogo.yy",},},
     {"id":{"name":"sprNameBox","path":"sprites/sprNameBox/sprNameBox.yy",},},
     {"id":{"name":"sprScheme","path":"sprites/sprScheme/sprScheme.yy",},},
     {"id":{"name":"sprSplash","path":"sprites/sprSplash/sprSplash.yy",},},

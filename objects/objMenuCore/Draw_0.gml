@@ -1,5 +1,5 @@
 var _cx = display_get_gui_width() * 0.5;
-var _cy = display_get_gui_height() * 0.32;
+var _cy = display_get_gui_height() * 0.42;
 
 var _has_runs = false;
 if (variable_global_exists("parents") && ds_exists(global.parents, ds_type_map)) {

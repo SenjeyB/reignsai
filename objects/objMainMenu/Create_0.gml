@@ -6,7 +6,7 @@ var _gw = display_get_gui_width();
 var _gh = display_get_gui_height();
 var _center_x = _gw * 0.5;
 var _stack_h = (button_height * 4) + (button_gap * 3);
-var _start_y = (_gh * 0.7) - (_stack_h * 0.5);
+var _start_y = (_gh * 0.74) - (_stack_h * 0.5);
 
 button_start_x1 = _center_x - (button_width * 0.5);
 button_start_y1 = _start_y;
