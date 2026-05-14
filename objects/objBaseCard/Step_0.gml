@@ -40,10 +40,10 @@ if (is_vaporizing) {
     exit;
 }
 
-var grab_band_top    = y - card_h * 0.40;
-var grab_band_bottom = y + card_h * 0.20;
-var grab_card_top    = y - card_h * 0.50;
-var grab_card_bottom = y + card_h * 0.40;
+var grab_band_top    = y - card_h * 0.20;
+var grab_band_bottom = y + card_h * 0.40;
+var grab_card_top    = y - card_h * 0.40;
+var grab_card_bottom = y + card_h * 0.50;
 
 var in_grab_zone = false;
 if (mx >= left && mx <= right) {
