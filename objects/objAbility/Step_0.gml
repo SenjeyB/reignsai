@@ -4,6 +4,12 @@ if (variable_global_exists("game_over") && global.game_over) {
 	exit;
 }
 
+if (variable_global_exists("scenario_paused") && global.scenario_paused) {
+	hover = false;
+	pressed = false;
+	exit;
+}
+
 hover = point_in_rectangle(
     mouse_x, mouse_y,
     bbox_left, bbox_top,

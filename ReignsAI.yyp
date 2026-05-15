@@ -60,6 +60,7 @@
     {"id":{"name":"objMenuCore","path":"objects/objMenuCore/objMenuCore.yy",},},
     {"id":{"name":"objMusController","path":"objects/objMusController/objMusController.yy",},},
     {"id":{"name":"objOption","path":"objects/objOption/objOption.yy",},},
+    {"id":{"name":"objPauseMenu","path":"objects/objPauseMenu/objPauseMenu.yy",},},
     {"id":{"name":"objScenarioController","path":"objects/objScenarioController/objScenarioController.yy",},},
     {"id":{"name":"objSettingsMenu","path":"objects/objSettingsMenu/objSettingsMenu.yy",},},
     {"id":{"name":"objSndController","path":"objects/objSndController/objSndController.yy",},},

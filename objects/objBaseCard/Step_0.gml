@@ -1,5 +1,16 @@
 position = 0;
 
+if (variable_global_exists("scenario_paused") && global.scenario_paused) {
+    grabbed = false;
+    grab_angle_x_t = 0;
+    grab_angle_y_t = 0;
+    angle = lerp(angle, 0, smooth);
+    offset = lerp(offset, 0, smooth);
+    grab_angle_x = lerp(grab_angle_x, 0, grab_smooth);
+    grab_angle_y = lerp(grab_angle_y, 0, grab_smooth);
+    exit;
+}
+
 var mx = device_mouse_x(0);
 var my = device_mouse_y(0);
 
